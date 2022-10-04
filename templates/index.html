@@ -1,0 +1,42 @@
+{% extends "base.html" %} 
+
+{% block title %}Index{% endblock %} 
+
+{% block head %} 
+
+    {{ super() }}
+    <h1>Welcome to Volcanoes Web!</h1>
+    <style></style>
+
+{% endblock %} 
+
+{% block body %} 
+        
+      
+        <a href="/secondendpoint">2000-2009</a>
+        <br>
+        <a href="/thirdendpoint">2010-2020</a>
+        <br>
+        <a href="/fourthendpoint">2020-2022</a>
+        <br>
+        <br>
+        <a href="/">all years</a>
+        <br>
+
+        <br><br>
+
+        <h4>All Years</h4>
+        <table>
+        {% for list in the_list %} 
+            
+            <tr>
+                <td>{{list.id}}</td>
+                <td>{{list.name}}</td>
+                <td>{{list.year}}</td>
+            </tr>
+            
+        {% endfor %}
+        </table>
+                   
+
+{% endblock %}
