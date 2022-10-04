@@ -19,11 +19,14 @@
         {% for list in the_list %} 
             
             {% if (list.year >= 2000) and (list.year < 2010) %}
-                <tr>
-                    <td>{{list.id}}</td>
-                    <td>{{list.name}}</td>
-                    <td>{{list.year}}</td>
-                </tr>
+            <tr>
+                <td>ID: {{list.id}}</td>
+                <td>{{list.name}}</td>
+                <td>{{list.year}}</td>
+                <td>{{list.morphology}}</td>
+                <td>VEI: {{list.vei}}</td>
+                <td>DEATHS: {{list.deathsTotal}}</td>
+            </tr>
             {% endif %}
             
         {% endfor %}

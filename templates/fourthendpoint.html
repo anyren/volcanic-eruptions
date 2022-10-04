@@ -21,9 +21,14 @@
 
             {% if (list.year >= 2020) and (list.year < 2023) %}
             <tr>
-                <td>{{list.id}}</td>
-                <td>{{list.name}}</td>
-                <td>{{list.year}}</td>
+                <tr>
+                    <td>ID: {{list.id}}</td>
+                    <td>{{list.name}}</td>
+                    <td>{{list.year}}</td>
+                    <td>{{list.morphology}}</td>
+                    <td>VEI: {{list.vei}}</td>
+                    <td>DEATHS: {{list.deathsTotal}}</td>
+                </tr>
             </tr>
             {% endif %}
 
