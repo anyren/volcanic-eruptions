@@ -1,0 +1,33 @@
+{% extends "base.html" %} 
+
+{% block title %}Secondendpoint{% endblock %} 
+
+{% block head %} 
+
+    {{ super() }}
+    <h1>Welcome to Volcanoes Web!</h1>
+    <style></style>
+
+{% endblock %} 
+
+{% block body %} 
+
+        <h3>2000-2009</h3>
+        <br><br>
+        
+        <table>
+        {% for list in the_list %} 
+            
+            {% if (list.year >= 2000) and (list.year < 2010) %}
+                <tr>
+                    <td>{{list.id}}</td>
+                    <td>{{list.name}}</td>
+                    <td>{{list.year}}</td>
+                </tr>
+            {% endif %}
+            
+        {% endfor %}
+        </table>
+        
+
+{% endblock %}
