@@ -30,9 +30,12 @@
         {% for list in the_list %} 
             
             <tr>
-                <td>{{list.id}}</td>
+                <td>ID: {{list.id}}</td>
                 <td>{{list.name}}</td>
                 <td>{{list.year}}</td>
+                <td>{{list.morphology}}</td>
+                <td>VEI: {{list.vei}}</td>
+                <td>DEATHS: {{list.deathsTotal}}</td>
             </tr>
             
         {% endfor %}
