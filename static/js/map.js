@@ -4,7 +4,7 @@ console.log("This is logic.js");
 
 // Create map object
 
-function createMap(markers, stratovolcano,shieldVolcano, submarineVolcano){
+function createMap(markers, stratovolcano,shieldVolcano, submarineVolcano,caldera,lavaDome, pyroclasticShield,subGlacial, complexVolcano){
     // tile layers
     let streetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -18,9 +18,14 @@ function createMap(markers, stratovolcano,shieldVolcano, submarineVolcano){
     // Create an overlayMaps object 
     let overlayMaps = {
         "All Volcanoes":markers,
-        "Stratovolcanoes":stratovolcano,
-        "Shield Volcanoes":shieldVolcano,
-        "Submarine Volcanoes":submarineVolcano,
+        "Caldera": caldera,
+        "Complex": complexVolcano,
+        "Lava dome":lavaDome,
+        "Pyroclastic shield": pyroclasticShield,
+        "Shield":shieldVolcano,
+        "Stratovolcano":stratovolcano,
+        "Subglacial": subGlacial,
+        "Submarine":submarineVolcano,
       }
 
     //create map object
@@ -64,6 +69,11 @@ let markerGroup = L.layerGroup(null);
 let stratovolcano = L.layerGroup(null);
 let shieldVolcano = L.layerGroup(null);
 let submarineVolcano = L.layerGroup(null);
+let caldera = L.layerGroup(null);
+let lavaDome = L.layerGroup(null);
+let pyroclasticShield = L.layerGroup(null);
+let subGlacial = L.layerGroup(null);
+let complexVolcano = L.layerGroup(null);
 
 function createMarkers(){
     // API
@@ -149,7 +159,22 @@ function createMarkers(){
             shieldVolcano.addLayer(circle);
         }
         else if (type =="Submarine volcano"){
-            submarineVolcano.addLayer(circle)
+            submarineVolcano.addLayer(circle);
+        }
+        else if (type == "Caldera"){
+            caldera.addLayer(circle);
+        }
+        else if (type == "Lava dome"){
+            lavaDome.addLayer(circle);
+        }
+        else if (type == "Pyroclastic shield"){
+            pyroclasticShield.addLayer(circle);
+        }
+        else if (type == "Subglacial volcano"){
+            subGlacial.addLayer(circle);
+        }
+        else if (type == "Complex volcano"){
+            complexVolcano.addLayer(circle);
         }
        
         markerGroup.addLayer(circle);
@@ -159,4 +184,4 @@ function createMarkers(){
     });
 };
 createMarkers();
-createMap(markerGroup, stratovolcano, shieldVolcano, submarineVolcano);
+createMap(markerGroup, stratovolcano, shieldVolcano, submarineVolcano, caldera,lavaDome, pyroclasticShield,subGlacial, complexVolcano);
