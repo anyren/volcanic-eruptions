@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect
 from flask_pymongo import PyMongo
 import requests
+import etl
 
 #############################################################
 # BEGIN FLASK ROUTING
@@ -71,6 +72,12 @@ def fourthendpoint():
     the_list = the_dict["items"]
     
     return render_template("fourthendpoint.html", the_list=the_list)
+
+@app.route("/fifthendpoint")
+def fifthendpoint():
+    etl.load()
+    data = etl.fetch()
+    return render_template("fifthendpoint.html", the_list=data)
 
     
 if __name__ == "__main__":
