@@ -1,6 +1,4 @@
-// logic.js
-
-console.log("This is logic.js");
+// most of this code was written by Bill Vann and Amanda Nyren added logic to break out the volcano types into layers
 
 // Create map object
 
