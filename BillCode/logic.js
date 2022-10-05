@@ -7,7 +7,7 @@ console.log("This is logic.js");
 let map = L.map("map").setView([0.9619, 114.5548], 4);
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  maxZoom: 13,
+  maxZoom: 2,
   attribution: "© OpenStreetMap",
 }).addTo(map);
 
@@ -18,7 +18,7 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 const url = "http://127.0.0.1:5000/fifthendpoint";
 
 d3.json(url).then(function (data) {
-  console.log(data);
+  //console.log(data);
 
   let the_dicts = data.items;
 
@@ -37,15 +37,15 @@ d3.json(url).then(function (data) {
     let year = the_dicts[i].year;
     let vei = the_dicts[i].vei;
 
-    console.log("LON: ", lon);
-    console.log("LAT: ", lat);
-    console.log("LOC: ", loc);
-    console.log("NAME: ", name);
-    console.log("COUNTRY: ", country);
-    // console.log("ID: ", id);
-    console.log("TYPE: ", type);
-    console.log("YEAR: ", year);
-    console.log("VEI: ", vei);
+    // console.log("LON: ", lon);
+    // console.log("LAT: ", lat);
+    // console.log("LOC: ", loc);
+    // console.log("NAME: ", name);
+    // console.log("COUNTRY: ", country);
+    // // console.log("ID: ", id);
+    // console.log("TYPE: ", type);
+    // console.log("YEAR: ", year);
+    // console.log("VEI: ", vei);
 
     // Size circles
 
