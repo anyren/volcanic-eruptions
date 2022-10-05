@@ -1,7 +1,8 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, jsonify
 from flask_pymongo import PyMongo
 import requests
 import etl
+from flask_cors import CORS
 
 #############################################################
 # BEGIN FLASK ROUTING
@@ -9,6 +10,7 @@ import etl
 
 
 app = Flask(__name__)
+CORS(app)
 
 
 
@@ -77,7 +79,10 @@ def fourthendpoint():
 def fifthendpoint():
     etl.load()
     data = etl.fetch()
-    return render_template("fifthendpoint.html", the_list=data)
+    # data = data.headers.add('Access-Control-Allow-Origin', '*')
+    # data = data.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    # data = data.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return jsonify(data)
 
     
 if __name__ == "__main__":
