@@ -37,7 +37,7 @@ d3.json(url).then(function(data) {
       let key = bubbleEntries[b][0]
       let year = Number(key.slice(0,4));
       let vei = Number(key.slice(-1));
-      let count = bubbleEntries[b][1] * 3;
+      let count = bubbleEntries[b][1] * 4;
       bubbleData.push([year, vei, count]);
     };
   
@@ -63,13 +63,27 @@ d3.json(url).then(function(data) {
         delay: (context) => {
           let delay = 0;
           if (context.type === 'data' && context.mode === 'default' && !delayed) {
-            // delay = context.dataIndex * 300 + context.datasetIndex * 100;
             delay = context.dataIndex * 200 ;
           }
           return delay;
         },
       },
       hoverRadius: 10,
+      hoverBorderColor: "black",
+      plugins: {
+        tooltip: {
+          backgroundColor: 'rgba(100,100,100,0.9)',
+          callbacks: {
+              label: (context) => {
+                year= context.parsed.x;
+                vei = context.parsed.y;
+                count = context.raw[2]/4;
+                label = `${count} eruptions with VEI of ${vei} occured in ${year}`;
+                return label;
+              },
+          },
+        },
+      },
       scales: {
         x: {
           ticks:{
@@ -77,13 +91,6 @@ d3.json(url).then(function(data) {
               labels: year,
             },
           },
-          // type: 'time',
-          // time: {
-          //     unit: 'year',
-          //     displayFormats: {
-          //       year: 'YYYY'
-          //   }
-          // },
           title: {
             display: true,
             text: "Year",
