@@ -75,11 +75,9 @@ let complexVolcano = L.layerGroup(null);
 
 function createMarkers(){
     // API
-    const url = "http://127.0.0.1:5000/fifthendpoint";
+    const url = "/readmongodb";
 
     d3.json(url).then(function (data) {
-    //console.log(data);
-
     let the_dicts = data.items;
 
     // Iterate over items
@@ -94,7 +92,6 @@ function createMarkers(){
         let country = the_dicts[i].country;
         // let id = the_dicts[i].id;
         let type = the_dicts[i].morphology;
-        console.log(type)
         let year = the_dicts[i].year;
         let vei = the_dicts[i].vei;
 

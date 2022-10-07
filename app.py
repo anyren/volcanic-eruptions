@@ -76,8 +76,8 @@ def fourthendpoint():
     
     return render_template("fourthendpoint.html", the_list=the_list)
 
-@app.route("/fifthendpoint")
-def fifthendpoint():
+@app.route("/readmongodb")
+def ReadMongoDB():
     # etl.load()
     data = etl.fetch()
     # data = data.headers.add('Access-Control-Allow-Origin', '*')
@@ -94,6 +94,13 @@ def map():
     # data = data.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return render_template("map.html")
 
+@app.route("/volcano")
+def ServeVolcano():
+   return render_template("volcano.html")
+
+@app.route("/year")
+def ServeYear():
+   return render_template("year.html")
     
 if __name__ == "__main__":
     app.run(debug=True)
