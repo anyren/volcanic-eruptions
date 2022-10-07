@@ -1,5 +1,5 @@
 .navbar-brand{
-    color: maroon; 
+    color: rgb(200,0,0); 
     background-color: #dedede;
     font-size:x-large;
     padding:10px;
@@ -9,7 +9,7 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 .nav-link{
-    color:maroon;
+    color:rgb(200,0,0);
     font-size: large;
 }
 #map{

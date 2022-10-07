@@ -37,7 +37,7 @@ d3.json(url).then(function(data) {
       let key = bubbleEntries[b][0]
       let year = Number(key.slice(0,4));
       let vei = Number(key.slice(-1));
-      let count = bubbleEntries[b][1] * 4;
+      let count = bubbleEntries[b][1] * 6;
       bubbleData.push([year, vei, count]);
     };
   
@@ -48,7 +48,7 @@ d3.json(url).then(function(data) {
     datasets: [{
       label: 'Eruptions',
       data: bubbleData,
-      backgroundColor: 'rgb(255, 99, 132)'
+      backgroundColor: 'rgb(200,0,0)'
     }],
   };
   let delayed;
@@ -69,7 +69,7 @@ d3.json(url).then(function(data) {
         },
       },
       hoverRadius: 10,
-      hoverBorderColor: "black",
+      hoverBorderColor: "rgb(120,0,0)",
       plugins: {
         tooltip: {
           backgroundColor: 'rgba(100,100,100,0.9)',
@@ -77,7 +77,7 @@ d3.json(url).then(function(data) {
               label: (context) => {
                 year= context.parsed.x;
                 vei = context.parsed.y;
-                count = context.raw[2]/4;
+                count = context.raw[2]/6;
                 label = `${count} eruptions with VEI of ${vei} occured in ${year}`;
                 return label;
               },
@@ -109,7 +109,7 @@ d3.json(url).then(function(data) {
         }
       },
       interaction: {
-        mode: 'x'
+        intersect: true
       },
     }
   };
