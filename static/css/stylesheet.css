@@ -1,15 +1,16 @@
 .navbar-brand{
     color: maroon; 
-    background-color: lightgrey;
+    background-color: #dedede;
     font-size:x-large;
     padding:10px;
 }
 .navbar{
-    background-color: lightgrey;
+    background-color: #dedede;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 .nav-link{
     color:maroon;
+    font-size: large;
 }
 #map{
     height: 700px;
@@ -45,4 +46,6 @@ body,html{
     margin: 0 8px 0 0;
     opacity: 0.7;
   }
-  
+  .gallery {
+    background-color: whitesmoke;
+  }

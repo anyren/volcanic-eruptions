@@ -34,7 +34,7 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="#">
-            <img src="static/images/volcano.png" width="50" height="50" class="d-inline-block align-top" alt="">
+            <img src="static/images/volcano.png" width="40" height="40" class="d-inline-block align-top" alt="">
             Explore Eruptions
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,9 +56,93 @@
         </div>
     </nav>
    
-    
+    <container>
+        <div class="row">
+            <div class="col-md-4 gx-5 gy-2">
+                <h3>21st Century Significant Volcanic Eruptions</h3>
+                <p> As defined by the <a href="https://www.ngdc.noaa.gov/">NOAA National Centers for Environmental Information</a>, a significant eruption meets at least one of the following:
+                    <ul>
+                        <li>Moderate damange of approximately USD $1 million or more</li>
+                        <li>Caused fatalities</li>
+                        <li>Produced an eruption with a Volcanic Explosivity Index (VEI) of 6 or larger</li>
+                        <li>Was associated with a major earthquake</li>
+                    </ul> 
+                <a href="https://en.wikipedia.org/wiki/Volcanic_explosivity_index">Volcanic Explosivity Index (VEI)</a> is a relative measure of the explosiveness of eruptions that goes from 0 at the lowest and 8 at the highest. 
+                It's a logarithmic scale that looks at how much volcanic material is ejecected, to what height, and how long the eruption lasts.
+                </p>
+
+            </div>
+            <div class="col-md-8 gx-5 gy-2">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="row gallery">
+            <div class="col-md-12 gx-5 gy-2">
+                <h3>Volcano Gallery</h3>
+            </div>
+        </div>
+        <div class="row gallery">
+            <div class="col-md-4 gy-2">
+                <div class="card" >
+                    <a href="https://en.wikipedia.org/wiki/Mount_Etna" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Etna_eruption_seen_from_the_International_Space_Station.jpg/1920px-Etna_eruption_seen_from_the_International_Space_Station.jpg" class="card-img-top" alt="Manyon Volcano"></a>
+                    <div class="card-body">
+                      <h5 class="card-title">Mount Etna (stratovolcano)</h5>
+                      <p class="card-text">Photo by NASA (From the International Space Station), Public Domain</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 gy-2">
+                <div class="card" >
+                    <a href="https://en.wikipedia.org/wiki/Eyjafjallaj%C3%B6kull" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/L%27Eyjafjallaj%C3%B6kull_sous_les_aurores_bor%C3%A9ales.jpg" class="card-img-top" alt="Eyjafjallajökull and the aurora."></a>
+                    <div class="card-body">
+                      <h5 class="card-title">Eyjafjallajökull (stratovolcano)</h5>
+                      <p class="card-text">Photo by <a href="https://commons.wikimedia.org/wiki/User:Thaumazein1">Sébastien Giguère</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons BY-SA 4.0</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 gy-2">
+                <div class="card" >
+                    <a href="https://en.wikipedia.org/wiki/Mount_Ontake" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Kiso_Ontake.jpg" class="card-img-top" alt="Mount Ontake"></a>
+                    <div class="card-body">
+                      <h5 class="card-title">Ontake-san (complex volcano)</h5>
+                      <p class="card-text">Photo from Atsushi Ueda, licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons BY-SA 3.0</a</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row gallery">
+            <div class="col-md-4 gy-2">
+                <div class="card" >
+                    <a href="https://en.wikipedia.org/wiki/Mount_Karthala" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Mount_Karthala_%2811000398163%29.jpg" class="card-img-top" alt="Mount Karthala "></a>
+                    <div class="card-body">
+                      <h5 class="card-title">Mount Karthala (sheild volcano)</h5>
+                      <p class="card-text">Photo by <a href="https://www.flickr.com/people/79721788@N00">David Stanley</a>, licensed under <a href="https://creativecommons.org/licenses/by/2.0/">Creative Commons BY 2.0</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 gy-2">
+                <div class="card" >
+                    <a href="https://en.wikipedia.org/wiki/Pacaya" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Pacaya_erupting_in_1976.jpg" class="card-img-top" alt="Lava dome in Mountt St. Helens"></a>
+                    <div class="card-body">
+                      <h5 class="card-title">Pacaya (complex volcano)</h5>
+                      <p class="card-text">Photo from USGS, Public Domain</p>                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 gy-2">
+                <div class="card">
+                    <a href="https://en.wikipedia.org/wiki/Chait%C3%A9n_(volcano)" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/8/89/The_chait%C3%A9n_volcano_in_eruption_october_2008_chile_xi_region.jpg" class="card-img-top" alt="Crater Lake, Oregon"></a>
+                    <div class="card-body">
+                      <h5 class="card-title">Chaitén (caldera)</h5>
+                      <p class="card-text">Photo by Gerard Prins , licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons BY-SA 3.0</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </container>
     <div>
-        <canvas id="myChart"></canvas>
+        
     </div>
 
 
