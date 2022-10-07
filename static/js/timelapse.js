@@ -1,7 +1,7 @@
 
 //
 
-const url = "https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000"
+const url = "/readmongodb"
 
 let c;
 d3.json(url).then(function(data) {
