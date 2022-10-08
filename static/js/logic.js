@@ -15,7 +15,7 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 // const url =
 //   "https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000";
-const url = "fifthendpoint";
+const url = "/readmongodb";
 
 d3.json(url).then(function (data) {
   console.log(data);
