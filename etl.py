@@ -1,4 +1,3 @@
-import json
 import requests 
 from pprint import pprint
 
@@ -33,13 +32,22 @@ def transform(items):
     
     try: 
         month = items['month']
-        day = items['day']
-        vei = items['vei']
-        deaths = items['deaths']
     except:
         month = None
-        day = None
+
+    try:
+        day = items['day']
+    except:
+         day = None
+
+    try:
+        vei = items['vei']
+    except:
         vei = "Unknown"
+
+    try:
+        deaths = items['deaths']
+    except:
         deaths = 0
         
     return {
