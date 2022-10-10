@@ -49,3 +49,7 @@ body,html{
   .gallery {
     background-color: #FFF8E2;
   }
+
+  #data-table {
+    text-align: left;
+  }
