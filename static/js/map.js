@@ -144,7 +144,7 @@ function createMarkers(){
             radius: radius,
             });
 
-        let popupText = name + "<br>" + type + "<br>" + year + "<br><br><b>VEI: </b>" + vei ;
+        let popupText = "<h5>" + name + " (" + year + ")" + "</h5><b>" + "Volcano Type: " + "</b>" + type + "<br><b>VEI: </b>" + vei ;
         circle.bindPopup(popupText);
         
         if(type=="Stratovolcano"){

@@ -22,8 +22,10 @@ d3.json(url).then(function(data) {
         eruptions.push(c[e]);
       }
     };
+    // sort so index is in the right order for the animation
     eruptions.sort();
     const bubbleDataObject = {};
+    // increment the count
     for (const element of eruptions) {
       if (bubbleDataObject[element]) {
         bubbleDataObject[element] += 1;
@@ -37,7 +39,8 @@ d3.json(url).then(function(data) {
       let key = bubbleEntries[b][0]
       let year = Number(key.slice(0,4));
       let vei = Number(key.slice(-1));
-      let count = bubbleEntries[b][1] * 6;
+      // multiple the count so that the bubbles are large enough on the graph. this will be divided out for the labels
+      let count = bubbleEntries[b][1] * 5;
       bubbleData.push([year, vei, count]);
     };
   
@@ -77,8 +80,18 @@ d3.json(url).then(function(data) {
               label: (context) => {
                 year= context.parsed.x;
                 vei = context.parsed.y;
-                count = context.raw[2]/6;
-                label = `${count} eruptions with VEI of ${vei} occured in ${year}`;
+                // divide out the number multiplied above so the label shows actual count
+                count = context.raw[2]/5;
+                // find specific eruptions
+                let obj = items.filter(o => o.year == year && o.vei === vei);
+                label = [`${count} eruptions with VEI of ${vei} occured in ${year}: `];
+                // add eruptions to tooltip
+                for (e=0; e<obj.length; e++){
+                  // tidy up date strings where month or day is missing
+                  let date = obj[e].date.replaceAll(/None\//g,"");
+                  volcano = `${obj[e].name} (${obj[e].country}, ${date})`
+                  label.push(volcano);
+                };
                 return label;
               },
           },
