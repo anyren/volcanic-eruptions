@@ -52,12 +52,77 @@
             </ul>
         </div>
     </nav>
-   <h3>Place for some graphs</h3>
-    <div id="myChart"></div>
+   
+    <!-- Cards  -->
+    <div class="container data-cards">
+        
+        <!-- Row 1 -->
+        <div class="row">
+
+            <!-- Column 1 -->
+            <div class="col-md-2">
+
+                <!-- id=drop-down-card -->
+                <div class="card text-center w-100" id="drop-down-card">   
+                    <div class="card-body">
+                        <h5 class="card-title">Year</h5>                        
+                        <select id="selDataset" onchange="optionChanged(this.value)">                          
+                        </select>
+                    </div>              
+                </div>
+
+            </div>          
+
+            <!-- Column 2 -->
+            <div class="col-md-5">
+
+                <!-- id=deaths-card -->
+                <div class="card text-center w-100" id="deaths-card">        
+                    <div class="card-body">
+                        <h5 class="heading">Deaths</h5>
+                        <br> 
+                        <div id="deaths-barchart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 3 -->
+            <div class="col-md-5">
+
+                <!-- id=injuries-card -->
+                <div class="card text-center w-100" id="injuries-card">        
+                    <div class="card-body">     
+                        <h5 class="heading">Injuries</h5>
+                        <br>                    
+                        <div id="injuries-barchart"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- Row 2 -->
+        <div class="row">
+
+            <!-- Column 1 -->
+            <div class="col-md-12">
+           
+                <!-- id=damage-card -->
+                <div class="card text-center w-100" id="damage-card">        
+                    <div class="card-body">
+                        <h5 class="heading">Damages</h5>
+                        <br>                          
+                        <div id="damages-barchart"></div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+
+    </div>
 
     <!-- D3 Library -->
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script type="text/javascript" src="static/js/map.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="/static/js/year.js"></script>  
   
   
 </body>
