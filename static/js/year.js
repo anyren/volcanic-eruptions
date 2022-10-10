@@ -51,7 +51,7 @@ function renderTable(yearSelected) {
     const url = "https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000";
     let deaths = 0;
     let injuries = 0;
-    // let houses = 0;
+    let houses = 0;
     let damages = 0;
 
     d3.json(url).then(function (data) {
@@ -66,7 +66,7 @@ function renderTable(yearSelected) {
            
                 let deathsNum = the_dicts[i]["deathsTotal"];
                 let injuriesNum = the_dicts[i]["injuriesTotal"];
-                // let housesNum = the_dicts[i]["housesDestroyedTotal"];            
+                let housesNum = the_dicts[i]["housesDestroyedTotal"];            
                 let damagesNum = the_dicts[i]["damageMillionsDollarsTotal"];
 
                 if (deathsNum) {
@@ -77,9 +77,9 @@ function renderTable(yearSelected) {
                     injuries = injuries + parseInt(injuriesNum);
                 }
 
-                // if (housesNum) {
-                //     houses = houses + parseInt(housesNum);
-                // }
+                if (housesNum) {
+                    houses = houses + parseInt(housesNum);
+                }
 
                 if (damagesNum) {
                     damages = damages + parseInt(damagesNum);          
@@ -91,7 +91,7 @@ function renderTable(yearSelected) {
 
         console.log("DEATHS: ", `${deaths}`);   
         console.log("INJURIES: ", `${injuries}`); 
-        // console.log("HOUSES: ", `${houses}`); 
+        console.log("HOUSES: ", `${houses}`); 
         console.log("DAMAGES: ", `${damages}`);      
 
         d3.select("#data-table").html("");
@@ -99,7 +99,7 @@ function renderTable(yearSelected) {
             
         demoTable.append("tbody").append("tr").text("DEATHS").append("td").text(deaths);
         demoTable.append("tbody").append("tr").text("INJURIES").append("td").text(injuries);
-        // demoTable.append("tbody").append("tr").text("HOUSES DESTROYED").append("td").text(houses);
+        demoTable.append("tbody").append("tr").text("HOUSES DESTROYED").append("td").text(houses);
         demoTable.append("tbody").append("tr").text("DAMAGES ($ millions)").append("td").text(damages);
         
 
@@ -124,14 +124,40 @@ function makeBarChart(yearSelected) {
 
     console.log("THIS IS MAKEBARCHART function");   
 
-    let yearsArray = [];
-    for (let i=2000; i<=2022; i++) {
-        yearsArray.push(i);
-    }
+    let vol_by_country = {'Indonesia': 39,
+    'United States': 12,
+    'Papua New Guinea': 11,
+    'Italy': 10,
+    'Japan': 9,
+    'Ecuador': 8,
+    'Philippines': 6,
+    'New Zealand': 4,
+    'Guatemala': 4,
+    'Tonga': 3,
+    'Chile': 3,
+    'Vanuatu': 3,
+    'Iceland': 2,
+    'Montserrat': 2,
+    'Colombia': 2,
+    'Congo, DRC': 2,
+    'Cape Verde': 1,
+    'Mexico': 1,
+    'Comoros': 1,
+    'Russia': 1,
+    'Yemen': 1,
+    'Eritrea': 1,
+    'Costa Rica': 1,
+    'El Salvador': 1,
+    'Peru': 1,
+    'Spain': 1,
+    'St. Vincent & the Grenadines': 1};
+
+    let keys = Object.keys(vol_by_country);
+    let values = Object.values(vol_by_country);    
     
     let trace = {
-        x: yearsArray, 
-        y: 100,
+        x: values.reverse(), 
+        y: keys.reverse(),
         type: "bar",
         orientation: "h",
         // text: otuLabelsTop10
@@ -143,18 +169,20 @@ function makeBarChart(yearSelected) {
         },
         showlegend: false,
         xaxis: {
-            tickangle: 45
+            tickangle: 0
         },
         yaxis: {
-            zeroline: false,
-            gridwidth: 2
+            zeroline: true,
+            gridwidth: 5,
+            dtick: 1,
+            automargin: true
         },
-        bargap :0.05
+        bargap : 5
     };
   
     let data = [trace];
 
-    Plotly.newPlot("deaths-barchart", data, layout);
+    Plotly.newPlot("deaths-by-country-barchart", data, layout);
 
 }
     
@@ -166,32 +194,52 @@ function makeBarChart(yearSelected) {
 
 function makeGaugeChart(yearSelected) {
 
-    console.log("THIS IS MAKEGAUGECHART function");      
+    console.log("THIS IS MAKEGAUGECHART function");   
     
-    let data = [
-        {
-            domain: { x: [0, 1], y: [0, 1] },
-            value: yearSelected,            
-            type: "indicator",
-            mode: "gauge+number",
-            // delta: { reference: 10 },
-            gauge: { axis: {range: [0, 10] } }
-        }
-    ];
+    let tot_deaths_by_year = {2000: 8.0,
+        2001: 4.0,
+        2002: 103.0,
+        2003: 0.0,
+        2004: 6.0,
+        2005: 3.0,
+        2006: 1277.0,
+        2007: 17.0,
+        2008: 13.0,
+        2009: 0.0,
+        2010: 376.0,
+        2011: 38.0,
+        2012: 0.0,
+        2013: 12.0,
+        2014: 80.0,
+        2015: 2.0,
+        2016: 9.0,
+        2017: 19.0,
+        2018: 644.0,
+        2019: 23.0,
+        2020: 40.0,
+        2021: 78.0,
+        2022: 7.0};
     
-    let layout = { 
-        width: 275, 
-        height: 100, 
-        margin: { 
-                    t: 0, 
-                    b: 0 
-                },
-        font:{
-               family: "Courier"
-             } 
-        };
+    let keys = Object.keys(tot_deaths_by_year);
+    let values = Object.values(tot_deaths_by_year); 
+    
+    let data = [{
+        values: values,
+        labels: keys,
+        type: 'pie',
+        textinfo: "label+percent",
+        // automargin: true,
+        insidetextorientation: "auto"
+      }];
+      
+    let layout = [{
+        height: 1200,
+        width: 1000,
+        // margin: {"t": 0, "b": 0, "l": 0, "r": 0},
+    }];
+    
+    Plotly.newPlot("deaths-by-year-piechart", data, layout);
 
-    Plotly.newPlot("injuries-gaugechart", data, layout);       
     
 }
 
@@ -203,39 +251,54 @@ function makeBubbleChart(yearSelected) {
 
     console.log("THIS IS MAKEBUBBLECHART function");     
 
-    let trace = {
-        x: yearSelected,
-        y: yearSelected,
-        mode: "markers",
-        marker: {
-                    size: 5,
-                    color: "black",                    
-                    colorscale: [
-                        [0, "rgb(166,206,227)"], 
-                        [0.25, "rgb(31,120,180)"], 
-                        [0.45, "rgb(178,223,138)"], 
-                        [0.65, "rgb(51,160,44)"], 
-                        [0.85, "rgb(251,154,153)"], 
-                        [1, "rgb(227,26,28)"]            
-                    ]
-                },
-        text: "TEXT"           
-    };
+    let num_volc_by_vei = {"VEI 1.0": 9, "VEI 2.0": 23, "VEI 3.0": 21, "VEI 4.0": 11, "VEI 5.0": 1};
+
+    let keys = Object.keys(num_volc_by_vei);
+    let values = Object.values(num_volc_by_vei);    
+
+    let data = [{
+        values: values,
+        labels: keys,
+        type: 'pie',
+        textinfo: "label+percent",
+        insidetextorientation: "auto"
+      }];
       
-    let data = [trace];
+    let layout = [{
+        height: 400,
+        width: 350
+    }];
     
-    let layout = {    
-        showlegend: false,
-        height: 1000,
-        width: 850,
-        xaxis:  { title: { text: "TEXT" } },
-        font: {
-                    family: "Courier"
-              } 
-     
-    };
+    Plotly.newPlot("vei-piechart", data, layout);
+
+    let num_volc_by_morph = {'Caldera': 5,
+    'Complex volcano': 4,
+    'Lava dome': 2,
+    'Pyroclastic shield': 1,
+    'Shield volcano': 13,
+    'Stratovolcano': 99,
+    'Subglacial volcano': 1,
+    'Submarine volcano': 6};
+
+    keys = Object.keys(num_volc_by_morph);
+    values = Object.values(num_volc_by_morph);    
+
+    data = [{
+        values: values,
+        labels: keys,
+        type: 'pie',
+        textinfo: "label+percent",
+        insidetextorientation: "auto"
+      }];
       
-    Plotly.newPlot("damages-bubblechart", data, layout);
+    layout = [{
+        height: 550,
+        width: 550
+    }];
+    
+    Plotly.newPlot("morph-piechart", data, layout);
+
+
     
 }  
 

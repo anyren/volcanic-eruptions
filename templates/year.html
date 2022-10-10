@@ -60,13 +60,14 @@
         <div class="row">
 
             <!-- Column 1 -->
-            <div class="col-md-4">
+            <div class="col-md-12">
 
                 <!-- id=drop-down-card -->
                 <div class="card text-center w-100" id="drop-down-card">   
                     <div class="card-body">
                         <h5 class="card-title">Year</h5>                        
                         <select id="selDataset" onchange="optionChanged(this.value)">                          
+                        <option value="2000-2022" selected>2000-2022</option>
                         </select>
                     </div>              
                 </div>
@@ -79,54 +80,75 @@
                         <div id="data-table"></div>
                     </div>
                 </div>
-
-            </div>          
-
-            <!-- Column 2 -->
-            <div class="col-md-4">
-
-                <!-- id=deaths-card -->
-                <div class="card text-center w-100" id="deaths-card">        
-                    <div class="card-body">
-                        <h5 class="heading">Deaths</h5>
-                        <br> 
-                        <div id="deaths-barchart"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Column 3 -->
-            <div class="col-md-4">
-
-                <!-- id=injuries-card -->
-                <div class="card text-center w-100" id="injuries-card">        
-                    <div class="card-body">     
-                        <h5 class="heading">Injuries</h5>
-                        <br>                    
-                        <div id="injuries-gaugechart"></div>
-                    </div>
-                </div>
-            </div>
-
+            </div>               
         </div>
         
         <!-- Row 2 -->
-        <div class="row">            
+        <div class="row">                
+            
+            <!-- Column 1 -->
+            <div class="col-md-12">
+
+                <!-- id=deaths-by-country-card -->
+                <div class="card text-center w-100" id="deaths-by-country-card">        
+                    <div class="card-body">
+                        <h5 class="heading">Deaths by Country</h5>
+                        <br> 
+                        <div id="deaths-by-country-barchart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="row">             
+
+            <!-- Column 1 -->
+            <div class="col-md-5">
+           
+                <!-- id=vei-card -->
+                <div class="card text-center w-100" id="vei-card">        
+                    <div class="card-body">
+                        <h5 class="heading">% Volcanoes by VEI</h5>
+                        <br>                          
+                        <div id="vei-piechart"></div>
+                    </div>
+                </div>
+            </div> 
+
+            <!-- Column 2 -->
+            <div class="col-md-7">
+
+                <!-- id=morph-card -->
+                <div class="card text-center w-100" id="morph-card">        
+                    <div class="card-body">     
+                        <h5 class="heading">Morphology</h5>
+                        <br>                    
+                        <div id="morph-piechart"></div>
+                    </div>
+                </div>
+            </div>       
+        </div>   
+        
+        <!-- Row 4 -->
+        <div class="row">  
 
             <!-- Column 1 -->
             <div class="col-md-12">
            
-                <!-- id=damage-card -->
-                <div class="card text-center w-100" id="damage-card">        
+                <!-- id=deaths-by-year-card -->
+                <div class="card text-center w-100" id="deaths-by-year-card">        
                     <div class="card-body">
-                        <h5 class="heading">Damages</h5>
+                        <h5 class="heading">Deaths by Year</h5>
                         <br>                          
-                        <div id="damages-bubblechart"></div>
+                        <div id="deaths-by-year-piechart"></div>
                     </div>
                 </div>
-            </div>        
-        </div>
+            </div> 
 
+            
+        </div>                     
+     
     </div>
 
     <!-- D3 Library -->
