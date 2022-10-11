@@ -40,7 +40,7 @@ d3.json(url).then(function(data) {
       let year = Number(key.slice(0,4));
       let vei = Number(key.slice(-1));
       // multiple the count so that the bubbles are large enough on the graph. this will be divided out for the labels
-      let count = bubbleEntries[b][1] * 5;
+      let count = bubbleEntries[b][1] * 4;
       bubbleData.push([year, vei, count]);
     };
   
@@ -59,6 +59,7 @@ d3.json(url).then(function(data) {
     type: 'bubble',
     data: eruptionData,
     options: {
+      locale: 'es',
       animation: {
         onComplete: () => {
           delayed = true;
@@ -72,19 +73,28 @@ d3.json(url).then(function(data) {
         },
       },
       hoverRadius: 10,
-      hoverBorderColor: "rgb(120,0,0)",
+      // hoverBorderColor: "rgb(120,0,0)",
+      hoverBackgroundColor: "orange",
       plugins: {
+        title:{
+          display: true,
+          text: "Count of Eruptions by Volcanic Explosivity Index (VEI) per Year"
+        },
+        legend:{
+          display: false,
+        },
         tooltip: {
           backgroundColor: 'rgba(100,100,100,0.9)',
+          displayColors: false,
           callbacks: {
               label: (context) => {
                 year= context.parsed.x;
                 vei = context.parsed.y;
                 // divide out the number multiplied above so the label shows actual count
-                count = context.raw[2]/5;
+                count = context.raw[2]/4;
                 // find specific eruptions
                 let obj = items.filter(o => o.year == year && o.vei === vei);
-                label = [`${count} eruptions with VEI of ${vei} occured in ${year}: `];
+                label = [`${count} eruption(s) with VEI of ${vei} occured in ${year}: `];
                 // add eruptions to tooltip
                 for (e=0; e<obj.length; e++){
                   // tidy up date strings where month or day is missing
@@ -101,15 +111,17 @@ d3.json(url).then(function(data) {
         x: {
           ticks:{
             source: {
+              // labels: ['2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022'],
               labels: year,
             },
+            stepSize: 2,
           },
-          title: {
-            display: true,
-            text: "Year",
-          },
+          // title: {
+          //   display: true,
+          //   text: "Year",
+          // },
           
-          min:1999,
+          min: 1999,
           max: 2023,
         },
         y: { // defining min and max so hiding the dataset does not change scale range
