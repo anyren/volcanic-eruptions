@@ -56,37 +56,45 @@ function renderTable(yearSelected) {
 
     d3.json(url).then(function (data) {
         let the_dicts = data.items;
-        console.log("RENDER_TABLE: ", the_dicts);                
+        console.log("RENDER_TABLE: ", the_dicts);        
+        
+        if (yearSelected == "2000-2022") {
+            deaths = 2759;
+            injuries = 34712;
+            houses = 19461;
+            damages = 3007;
 
-        for (let i = 0; i < the_dicts.length; i++) {    
-            // console.log("INDIV_DICT: ", the_dicts[i]); 
+        } else {
+      
+            for (let i = 0; i < the_dicts.length; i++) {    
+                // console.log("INDIV_DICT: ", the_dicts[i]); 
 
-            if (yearSelected == the_dicts[i]["year"]) {
-
-           
-                let deathsNum = the_dicts[i]["deathsTotal"];
-                let injuriesNum = the_dicts[i]["injuriesTotal"];
-                let housesNum = the_dicts[i]["housesDestroyedTotal"];            
-                let damagesNum = the_dicts[i]["damageMillionsDollarsTotal"];
-
-                if (deathsNum) {
-                    deaths = deaths + parseInt(deathsNum); 
-                }
-                
-                if (injuriesNum) {
-                    injuries = injuries + parseInt(injuriesNum);
-                }
-
-                if (housesNum) {
-                    houses = houses + parseInt(housesNum);
-                }
-
-                if (damagesNum) {
-                    damages = damages + parseInt(damagesNum);          
-                }
+                if (yearSelected == the_dicts[i]["year"]) {
             
+                    let deathsNum = the_dicts[i]["deathsTotal"];
+                    let injuriesNum = the_dicts[i]["injuriesTotal"];
+                    let housesNum = the_dicts[i]["housesDestroyedTotal"];            
+                    let damagesNum = the_dicts[i]["damageMillionsDollarsTotal"];
+
+                    if (deathsNum) {
+                        deaths = deaths + parseInt(deathsNum); 
+                    }
+                    
+                    if (injuriesNum) {
+                        injuries = injuries + parseInt(injuriesNum);
+                    }
+
+                    if (housesNum) {
+                        houses = houses + parseInt(housesNum);
+                    }
+
+                    if (damagesNum) {
+                        damages = damages + parseInt(damagesNum);          
+                    }
+                
+                }
+                                    
             }
-                                   
         }
 
         console.log("DEATHS: ", `${deaths}`);   
@@ -235,6 +243,7 @@ function makeGaugeChart(yearSelected) {
     let layout = [{
         height: 1200,
         width: 1000,
+        hiddenlabels: (2006),
         // margin: {"t": 0, "b": 0, "l": 0, "r": 0},
     }];
     
@@ -252,13 +261,13 @@ function makeBubbleChart(yearSelected) {
     console.log("THIS IS MAKEBUBBLECHART function");     
 
     let num_volc_by_vei = {"VEI 1.0": 9, "VEI 2.0": 23, "VEI 3.0": 21, "VEI 4.0": 11, "VEI 5.0": 1};
-
+ 
     let keys = Object.keys(num_volc_by_vei);
     let values = Object.values(num_volc_by_vei);    
 
     let data = [{
         values: values,
-        labels: keys,
+        labels: keys,        
         type: 'pie',
         textinfo: "label+percent",
         insidetextorientation: "auto"
@@ -328,7 +337,7 @@ function init() {
 
     // Make table and charts
 
-    let yearSelected = 2000;
+    let yearSelected = "2000-2022";
 
     renderTable(yearSelected);
     makeBarChart(yearSelected);

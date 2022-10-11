@@ -69,6 +69,15 @@ def ReadMongoDB():
     data = etl.fetch()
     return jsonify(data)
 
+# @app.route("/billmorphdata")
+# def billMorphData():
+#     data = etl.fetch()
+
+#     # pandas data transformation 
+
+
+#     return jsonify(data)
+
 @app.route("/map")
 def map():
     return render_template("map.html")
