@@ -28,12 +28,14 @@
 
 <body>
 
-     <!-- navbar -->
+     <!-- Navbar -->
      <nav class="navbar navbar-expand-lg">
+
         <a class="navbar-brand" href={{ url_for("index") }}>
             <img src="static/images/volcano.png" width="40" height="40" class="d-inline-block align-top" alt="">
             Explore Eruptions
         </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -60,102 +62,121 @@
         <div class="row">
 
             <!-- Column 1 -->
-            <div class="col-md-12">
+            <div class="col-md-6">
 
                 <!-- id=drop-down-card -->
-                <div class="card text-center w-100" id="drop-down-card">   
+                <div class="card text-center" id="drop-down-card">   
                     <div class="card-body">
                         <h5 class="card-title">Year</h5>                        
-                        <select id="selDataset" onchange="optionChanged(this.value)">                          
-                        <option value="2000-2022" selected>2000-2022</option>
+                        <select id="selectYear" onchange="newYearSelected(this.value)">                       
                         </select>
                     </div>              
                 </div>
 
+            </div>
+
+            <!-- Column 2 -->
+            <div class="col-md-6">
+
                 <!-- id=data-table-card -->
-                <div class="card text-center w-100" id="data-table-card">        
+                <div class="card text-center" id="data-table-card">        
                     <div class="card-body">                                              
                         <h5 class="heading">Data</h5>
                         <br> 
                         <div id="data-table"></div>
                     </div>
                 </div>
-            </div>               
+            </div>     
+
         </div>
-        
+
         <!-- Row 2 -->
-        <div class="row">                
+        <div class="row">       
             
             <!-- Column 1 -->
             <div class="col-md-12">
 
                 <!-- id=deaths-by-country-card -->
-                <div class="card text-center w-100" id="deaths-by-country-card">        
+                <div class="card text-center" id="deaths-by-country-card">        
                     <div class="card-body">
                         <h5 class="heading">Deaths by Country</h5>
                         <br> 
                         <div id="deaths-by-country-barchart"></div>
                     </div>
                 </div>
-            </div>
+            </div>            
+                      
         </div>
-
+        
         <!-- Row 3 -->
-        <div class="row">             
-
+        <div class="row">                
+            
             <!-- Column 1 -->
-            <div class="col-md-5">
-           
-                <!-- id=vei-card -->
-                <div class="card text-center w-100" id="vei-card">        
+            <div class="col-md-4">
+
+                <!-- id=pie1-card -->
+                <div class="card text-center" id="pie1-card">        
                     <div class="card-body">
-                        <h5 class="heading">Volcanoes by VEI</h5>
-                        <br>                          
-                        <div id="vei-piechart"></div>
+                        <h5 class="heading">Pie 1</h5>
+                        <br> 
+                        <div id="pie1"></div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <!-- Column 2 -->
-            <div class="col-md-7">
+            <div class="col-md-4">
 
-                <!-- id=morph-card -->
-                <div class="card text-center w-100" id="morph-card">        
-                    <div class="card-body">     
-                        <h5 class="heading">Morphology</h5>
-                        <br>                    
-                        <div id="morph-piechart"></div>
+                <!-- id=pie2-card -->
+                <div class="card text-center" id="pie2-card">        
+                    <div class="card-body">
+                        <h5 class="heading">Pie 2</h5>
+                        <br> 
+                        <div id="pie2"></div>
                     </div>
                 </div>
-            </div>       
-        </div>   
-        
+            </div>
+
+            <!-- Column 3 -->
+            <div class="col-md-4">
+
+                <!-- id=pie3-card -->
+                <div class="card text-center" id="pie3-card">        
+                    <div class="card-body">
+                        <h5 class="heading">Pie 3</h5>
+                        <br> 
+                        <div id="pie3"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <!-- Row 4 -->
-        <div class="row">  
+        <div class="row">             
 
             <!-- Column 1 -->
             <div class="col-md-12">
            
-                <!-- id=deaths-by-year-card -->
-                <div class="card text-center w-100" id="deaths-by-year-card">        
+                <!-- id=r4-card -->
+                <div class="card text-center" id="r4-card">        
                     <div class="card-body">
-                        <h5 class="heading">Deaths by Year</h5>
+                        <h5 class="heading">Row 4 Card</h5>
                         <br>                          
-                        <div id="deaths-by-year-piechart"></div>
+                        <div id="row4viz"></div>
                     </div>
                 </div>
             </div> 
 
-            
-        </div>                     
-     
+        </div>
+
+        
     </div>
 
     <!-- D3 Library -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="/static/js/year.js"></script>  
-  
-  
+    
 </body>
 
 </html>
