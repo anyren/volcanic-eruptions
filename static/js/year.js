@@ -1,10 +1,9 @@
 function refreshViz(year) {
 
-    // makeDataTable(year);
+    makeDataTable(year);
     makeHBarChart(year);
-    // makeDeathsPieChart(year);
-    // makeVEIPieChart(year);
-    // makeMorphologyPieChart(year);
+    makeVEIPieChart(year);
+    makeMorphologyPieChart(year);
     makeLinePlot(year);
 
 
@@ -50,19 +49,31 @@ function makeDropDownList() {
 
 function makeDataTable(year) {
 
+    console.clear();
+
     console.log("makeDataTable function");  
 
-    const url = "/"    
+    const url = "/aggregate5";    
 
-    d3.json(url).then(function (data) {              
-       
+    d3.json(url).then(function (data) {      
+        
+        console.log(data);
+        
+        let keys = Object.keys(data);
+        let values = Object.values(data);  
+        let entries = Object.entries(data);         
+
+        console.log("KEYS: ", keys);
+        console.log("VALS: ", values);   
+        
         d3.select("#data-table").html("");
         let demoTable = d3.select("#data-table").append("table").attr("class", "table table-striped");
-            
-        demoTable.append("tbody").append("tr").text("DEATHS").append("td").text(deaths);
-        demoTable.append("tbody").append("tr").text("INJURIES").append("td").text(injuries);
-        demoTable.append("tbody").append("tr").text("HOUSES DESTROYED").append("td").text(houses);
-        demoTable.append("tbody").append("tr").text("DAMAGES ($ millions)").append("td").text(damages);
+
+        for (let i=0; i<keys.length; i++) {
+            demoTable.append("tbody").append("tr").text(keys[i]).append("td").text(values[i]);
+
+        }
+                       
         
     });
             
@@ -74,9 +85,11 @@ function compareNumbers(a, b) {
 
 function makeHBarChart(year) {    
 
-    console.log("makeHBarChart function");   
-
+    console.log("makeHBarChart function");    
+    
     function drawPlot(plotData) {
+
+        console.log(plotData);  
         let keys = Object.keys(plotData);
         let values = Object.values(plotData);    
         
@@ -89,6 +102,7 @@ function makeHBarChart(year) {
 
         let layout = {        
             
+            autosize: true,
             showlegend: false,
             xaxis: {
                 tickangle: 0
@@ -99,12 +113,13 @@ function makeHBarChart(year) {
                 dtick: 1,
                 automargin: true
             },
-            bargap : 5
+            bargap : 5,
+           
         };
     
         let data = [trace];
 
-        Plotly.newPlot("deaths-by-country-barchart", data, layout);
+        Plotly.newPlot("volcanoes-by-country-hbarchart", data, layout);
     }
 
     const url = "/aggregate2";
@@ -116,84 +131,76 @@ function makeHBarChart(year) {
 
 }
     
-
-
-function makeDeathsPieChart(year) {
-
-    console.log("makeDeathsPieChart function");   
-
-    
-    
-    // let keys = Object.keys(tot_deaths_by_year);
-    // let values = Object.values(tot_deaths_by_year); 
-    
-    // let data = [{
-    //     values: values,
-    //     labels: keys,
-    //     type: 'pie',
-    //     textinfo: "label+percent",
-    //     // automargin: true,
-    //     insidetextorientation: "auto"
-    //   }];
-      
-    // let layout = [{
-    //     height: 1200,
-    //     width: 1000,
-    //     hiddenlabels: (2006),
-    //     // margin: {"t": 0, "b": 0, "l": 0, "r": 0},
-    // }];
-    
-    // Plotly.newPlot("deaths-by-year-piechart", data, layout);
-
-    
-}
-
-
 function makeVEIPieChart(year) {
 
     console.log("makeVEIPieChart function");     
 
-    // let keys = Object.keys(num_volc_by_vei);
-    // let values = Object.values(num_volc_by_vei);    
+    function drawPlot(plotData) {
 
-    // let data = [{
-    //     values: values,
-    //     labels: keys,        
-    //     type: 'pie',
-    //     textinfo: "label+percent",
-    //     insidetextorientation: "auto"
-    //   }];
-      
-    // let layout = [{
-    //     height: 400,
-    //     width: 350
-    // }];
+        keys = Object.keys(plotData);
+        values = Object.values(plotData);    
+
+        let data = [{
+            values: values,
+            labels: keys,        
+            type: 'pie',
+            textinfo: "label+percent",
+            insidetextorientation: "auto"
+        }];
+        
+        let layout = [{
+            autosize: true,
+            height: 400,
+            width: 350
+        }];
+        
+        Plotly.newPlot("vei-piechart", data, layout);
+
+    }
+
+    const url = "/aggregate4";
+
+    d3.json(url).then(function (data) {
+        console.log(data);
+        drawPlot(data);  
+    });       
+
     
-    // Plotly.newPlot("vei-piechart", data, layout);
-
 }
 
 function makeMorphologyPieChart(year) {
 
     console.log("makeMorphologyPieChart function");     
 
-    // keys = Object.keys(num_volc_by_morph);
-    // values = Object.values(num_volc_by_morph);    
+    function drawPlot(plotData) {
+        keys = Object.keys(plotData);
+        values = Object.values(plotData);    
 
-    // data = [{
-    //     values: values,
-    //     labels: keys,
-    //     type: 'pie',
-    //     textinfo: "label+percent",
-    //     insidetextorientation: "auto"
-    //   }];
-      
-    // layout = [{
-    //     height: 550,
-    //     width: 550
-    // }];
-    
-    // Plotly.newPlot("morph-piechart", data, layout);
+        data = [{
+            values: values,
+            labels: keys,
+            type: 'pie',
+            textinfo: "label+percent",
+            insidetextorientation: "auto",
+
+        }];
+        
+        layout = [{
+            autosize: true,
+            height: 550,
+            width: 950,
+            
+        }];
+        
+        Plotly.newPlot("pie1", data, layout);
+    }
+
+    const url = "/aggregate3";
+
+    d3.json(url).then(function (data) {
+        console.log(data);
+        drawPlot(data);  
+    });       
     
 }  
 
@@ -218,10 +225,8 @@ function makeLinePlot(year) {
         };    
                
         data = [trace];
-        let layout = {
-            "title": "Number of Volcanoes: " + year
-        };        
-        Plotly.newPlot("row4viz", data, layout);
+        let layout = {autosize: true};        
+        Plotly.newPlot("eruptions-linechart", data, layout);
 
     }
 
