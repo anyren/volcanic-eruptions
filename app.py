@@ -1,5 +1,4 @@
-from flask import Flask, render_template, redirect, jsonify
-from flask_pymongo import PyMongo
+from flask import Flask, render_template, jsonify
 import pandas as pd
 import requests
 import etl
@@ -40,16 +39,29 @@ def ReadMongoDB():
     data = etl.fetch()
     return jsonify(data)
 
-@app.route("/aggregated_data")
-def aggregated_data():
+@app.route("/aggregate1")
+def aggregate1():
     the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
     df = pd.DataFrame(data=the_json["items"])
     df = df[["id","name","country","year","morphology","vei","deathsTotal",\
              "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
              "housesDestroyedTotal"]]
-    num_vol_by_year = df.groupby("year")["id"].count().to_dict()
     
-    return jsonify(num_vol_by_year)
+    volcanos_by_year = df.groupby("year")["id"].count().to_dict()
+    
+    return jsonify(volcanos_by_year)     
+
+@app.route("/aggregate2")
+def aggregate2():
+    the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
+    df = pd.DataFrame(data=the_json["items"])
+    df = df[["id","name","country","year","morphology","vei","deathsTotal",\
+             "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
+             "housesDestroyedTotal"]]
+    
+    volcanos_by_country = df.groupby(["country"])["id"].count().to_dict()
+
+    return jsonify(volcanos_by_country)
 
     
 if __name__ == "__main__":

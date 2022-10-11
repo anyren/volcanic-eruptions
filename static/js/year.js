@@ -1,11 +1,11 @@
 function refreshViz(year) {
 
     // makeDataTable(year);
-    // makeHBarChart(year);
+    makeHBarChart(year);
     // makeDeathsPieChart(year);
     // makeVEIPieChart(year);
     // makeMorphologyPieChart(year);
-    // makeLinePlot(year);
+    makeLinePlot(year);
 
 
 }
@@ -18,6 +18,8 @@ function newYearSelected(year) {
     
     console.clear();
     console.log("year selected: ", year);
+    refreshViz(year);
+
                   
 }
 
@@ -41,7 +43,7 @@ function makeDropDownList() {
         .text(function(d) {return d; })
         .attr("value", function(d) {return d; });  
 
-    refreshViz(defaultYear);
+    newYearSelected(defaultYear);    
         
 }
 
@@ -73,38 +75,44 @@ function compareNumbers(a, b) {
 function makeHBarChart(year) {    
 
     console.log("makeHBarChart function");   
-    
-    // let keys = Object.keys(vol_by_country);
-    // let values = Object.values(vol_by_country);    
-    
-    // let trace = {
-    //     x: values.reverse(), 
-    //     y: keys.reverse(),
-    //     type: "bar",
-    //     orientation: "h",
-    //     // text: otuLabelsTop10
-    // };
 
-    // let layout = {        
-    //     font:{
-    //         family: "Courier"
-    //     },
-    //     showlegend: false,
-    //     xaxis: {
-    //         tickangle: 0
-    //     },
-    //     yaxis: {
-    //         zeroline: true,
-    //         gridwidth: 5,
-    //         dtick: 1,
-    //         automargin: true
-    //     },
-    //     bargap : 5
-    // };
-  
-    // let data = [trace];
+    function drawPlot(plotData) {
+        let keys = Object.keys(plotData);
+        let values = Object.values(plotData);    
+        
+        let trace = {
+            x: values.reverse(), 
+            y: keys.reverse(),
+            type: "bar",
+            orientation: "h",            
+        };
 
-    // Plotly.newPlot("deaths-by-country-barchart", data, layout);
+        let layout = {        
+            
+            showlegend: false,
+            xaxis: {
+                tickangle: 0
+            },
+            yaxis: {
+                zeroline: true,
+                gridwidth: 5,
+                dtick: 1,
+                automargin: true
+            },
+            bargap : 5
+        };
+    
+        let data = [trace];
+
+        Plotly.newPlot("deaths-by-country-barchart", data, layout);
+    }
+
+    const url = "/aggregate2";
+
+    d3.json(url).then(function (data) {
+        console.log(data);
+        drawPlot(data);  
+    });        
 
 }
     
@@ -113,6 +121,8 @@ function makeHBarChart(year) {
 function makeDeathsPieChart(year) {
 
     console.log("makeDeathsPieChart function");   
+
+    
     
     // let keys = Object.keys(tot_deaths_by_year);
     // let values = Object.values(tot_deaths_by_year); 
@@ -192,28 +202,43 @@ function makeLinePlot(year) {
 
     console.log("makeLinePlot function");     
 
-    // const url = "/aggregated_data";
+    function drawPlot(plotData) {     
+       
+        keys = Object.keys(plotData);
+        values = Object.values(plotData);
+        plotType = "scatter";
+            
+        console.log("drawplot keys ", keys);
+        console.log("drawplot values ", values);
 
-    // d3.json(url).then(function (data) {
-    //     let the_dicts = data;
+        let trace = {
+            x: keys,
+            y: values,            
+            type: plotType
+        };    
+               
+        data = [trace];
+        let layout = {
+            "title": "Number of Volcanoes: " + year
+        };        
+        Plotly.newPlot("row4viz", data, layout);
 
+    }
 
+    const url = "/aggregate1";  
 
-    // });
+    d3.json(url).then(function (data) {
+        console.log(data);
+        drawPlot(data);  
+    });    
 
 }
  
  
 
 function init() {    
-    const url = "/readmongodb";
-
-    d3.json(url).then(function (data) {
-        let the_dicts = data.items;
-        console.log("THEDICTS: ", the_dicts);             
-    
-    });
-
+    console.clear;
+   
     makeDropDownList();         
              
 }
