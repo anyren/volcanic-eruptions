@@ -28,12 +28,14 @@
 
 <body>
 
-     <!-- navbar -->
+     <!-- Navbar -->
      <nav class="navbar navbar-expand-lg">
+
         <a class="navbar-brand" href={{ url_for("index") }}>
             <img src="static/images/volcano.png" width="40" height="40" class="d-inline-block align-top" alt="">
             Explore Eruptions
         </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -47,19 +49,112 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href=#}>Year</a>
+                <a class="nav-link" href=#>Year</a>
             </li>
             </ul>
         </div>
     </nav>
-   <h3>Place for some graphs</h3>
-    <div id="myChart"></div>
+   
+    <!-- Cards  -->
+    <div class="container data-cards">
+        
+        <!-- Row 1 -->
+        <div class="row">
+
+            <!-- Column 1 -->
+            <div class="col-md-4">
+
+                <!-- id=drop-down-card -->
+                <div class="card text-center" id="drop-down-card">   
+                    <div class="card-body">
+                        <h5 class="card-title">Year</h5>                        
+                        <select id="selectYear" onchange="newYearSelected(this.value)">                       
+                        </select>
+                        <br><br> <br><hr>
+                        <h5 class="heading">Data</h5>
+                        
+                        <div id="data-table"></div>
+                    </div>              
+                </div>
+
+            </div>
+
+            <!-- Column 2 -->
+            <div class="col-md-8">
+
+                <!-- id=volcanoes-by-country-card -->
+                <div class="card text-center" id="volcanoes-by-country-card">        
+                    <div class="card-body">        
+                        <h5>Volcanoes by Country</h5>                
+                        <div id="volcanoes-by-country-hbarchart"></div>
+                    </div>
+                </div>
+            </div>          
+
+        </div>
+
+
+         
+        <!-- Row 3 -->
+        <div class="row">                
+            
+            <!-- Column 1 -->
+            <div class="col-md-12">
+
+                <!-- id=pie1-card -->
+                <div class="card text-center" id="pie1-card">        
+                    <div class="card-body">
+                        <h5>Morphology</h5>                        
+                        <div id="pie1"></div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+        </div>
+
+        <!-- Row 4 -->
+        <div class="row">             
+
+            <!-- Column 1 -->
+            <div class="col-md-12">
+           
+                <!-- id=eruptions-card -->
+                <div class="card text-center" id="eruptions-card">        
+                    <div class="card-body">      
+                        <h5>Number of Eruptions</h5>
+                        <div id="eruptions-linechart"></div>
+                    </div>
+                </div>
+            </div> 
+
+        </div>
+
+        <!-- Row 5 -->
+        <div class="row">             
+
+            <!-- Column 1 -->
+            <div class="col-md-12">
+           
+                <!-- id=vei-card -->
+                <div class="card text-center" id="vei-card">        
+                    <div class="card-body">      
+                        <h5>Volcanoes by VEI</h5>
+                        <div id="vei-piechart"></div>
+                    </div>
+                </div>
+            </div> 
+
+        </div>
+
+        
+    </div>
 
     <!-- D3 Library -->
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script type="text/javascript" src="static/js/map.js"></script>
-  
-  
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="/static/js/year.js"></script>  
+    
 </body>
 
 </html>

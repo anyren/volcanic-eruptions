@@ -49,3 +49,26 @@ body,html{
   .gallery {
     background-color: #FFF8E2;
   }
+
+  #data-table {
+    text-align: left;
+  }
+
+  #drop-down-card {
+    text-align: center;
+
+  }
+
+  .col-md-4 {
+    text-align: center;
+
+
+  }
+
+  .container data-cards {
+    background-color: white;
+    color: black;
+    padding: 5px;
+    margin: 5px;
+    border: 5px;
+  }
