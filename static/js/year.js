@@ -1,67 +1,49 @@
 function refreshViz(year) {
-
+    console.clear();
     makeDataTable(year);
     makeHBarChart(year);
     makeVEIPieChart(year);
     makeMorphologyPieChart(year);
     makeLinePlot(year);
-
-
 }
 
-
-
-
-
-function newYearSelected(year) {
-    
+function newYearSelected(year) {    
     console.clear();
-    console.log("year selected: ", year);
-    refreshViz(year);
-
-                  
+    console.log("year_selected: ", year);
+    refreshViz(year);                  
 }
 
 function makeDropDownList() {
-
+    console.clear();
     let dropDownList = d3.select("#selectYear");
+    let defaultYear = "ENTIRE DATASET (2000-2022)";
 
-    let yearsArray = [];
-    for (let i=2000; i<=2022; i++) {
-        yearsArray.push(i);
-    }
+    dropDownList.append("option").text(defaultYear).attr("value", "2000-2022").attr("selected", true);
+    dropDownList.append("option").text("2000-2011").attr("value", "2000-2011");
+    dropDownList.append("option").text("2012-2022").attr("value", "2012-2022");
 
-    let defaultYear = "2000-2022";
-
-    dropDownList.append("option").text(defaultYear).attr("value", defaultYear).attr("selected", true);
-
-    dropDownList.selectAll("option")
-        .data(yearsArray)
-        .enter()
-        .append("option")
-        .text(function(d) {return d; })
-        .attr("value", function(d) {return d; });  
-
-    newYearSelected(defaultYear);    
-        
+    newYearSelected(defaultYear);     
 }
 
-
 function makeDataTable(year) {
+    console.log("makeDataTable function");
+    const url = "/summary_data";    
 
-    console.clear();
-
-    console.log("makeDataTable function");  
-
-    const url = "/aggregate5";    
-
-    d3.json(url).then(function (data) {      
-        
-        console.log(data);
-        
+    d3.json(url).then(function (data) {   
+        console.log("makeDataTable data:", data);
         let keys = Object.keys(data);
-        let values = Object.values(data);  
-        let entries = Object.entries(data);         
+        let values = Object.values(data); 
+
+        if (year=="ENTIRE DATASET (2000-2022)") {
+            keys = Object.keys(data);
+            values = Object.values(data); 
+        } else if (year=="2000-2011") {
+            keys = Object.keys(data);
+            values = Object.values(data); 
+        } else if (year=="2012-2022") {
+            keys = Object.keys(data);
+            values = Object.values(data); 
+        }                       
 
         console.log("KEYS: ", keys);
         console.log("VALS: ", values);   
@@ -71,25 +53,21 @@ function makeDataTable(year) {
 
         for (let i=0; i<keys.length; i++) {
             demoTable.append("tbody").append("tr").text(keys[i]).append("td").text(values[i]);
-
-        }
-                       
-        
-    });
-            
+        }                    
+    });            
 }
 
 function compareNumbers(a, b) {
     return b - a;
 }
 
-function makeHBarChart(year) {    
+function makeHBarChart(year) { 
+    console.log("makeHBarChart function");
 
-    console.log("makeHBarChart function");    
-    
+    //////////////////////////////////////////////
     function drawPlot(plotData) {
+        console.log("makeHBarChart plotData:", plotData);
 
-        console.log(plotData);  
         let keys = Object.keys(plotData);
         let values = Object.values(plotData);    
         
@@ -100,43 +78,43 @@ function makeHBarChart(year) {
             orientation: "h",            
         };
 
-        let layout = {        
-            
+        let layout = {     
             autosize: true,
             showlegend: false,
-            xaxis: {
-                tickangle: 0
-            },
+            xaxis: {tickangle: 0},
             yaxis: {
                 zeroline: true,
                 gridwidth: 5,
                 dtick: 1,
                 automargin: true
             },
-            bargap : 5,
-           
+            bargap : 5,           
         };
     
         let data = [trace];
-
         Plotly.newPlot("volcanoes-by-country-hbarchart", data, layout);
     }
+    //////////////////////////////////////////////
 
-    const url = "/aggregate2";
+    const url = "/volcanos_by_country";
 
     d3.json(url).then(function (data) {
-        console.log(data);
-        drawPlot(data);  
-    });        
-
+        console.log("volcanos_by_country data: ", data);
+        if (year=="ENTIRE DATASET (2000-2022)") {
+            drawPlot(data);
+        } else if (year=="2000-2011") {
+            drawPlot(data);
+        } else if (year=="2012-2022") {
+            drawPlot(data);
+        }
+    });      
 }
     
 function makeVEIPieChart(year) {
-
     console.log("makeVEIPieChart function");     
 
+    //////////////////////////////////////////////
     function drawPlot(plotData) {
-
         keys = Object.keys(plotData);
         values = Object.values(plotData);    
 
@@ -150,28 +128,32 @@ function makeVEIPieChart(year) {
         
         let layout = [{
             autosize: true,
-            height: 400,
-            width: 350
+            // height: 400,
+            // width: 350
         }];
         
         Plotly.newPlot("vei-piechart", data, layout);
-
     }
+    //////////////////////////////////////////////
 
-    const url = "/aggregate4";
+    const url = "/volcanos_by_vei";
 
     d3.json(url).then(function (data) {
         console.log(data);
-        drawPlot(data);  
-    });       
-
-    
+        if (year=="ENTIRE DATASET (2000-2022)") {
+            drawPlot(data);
+        } else if (year=="2000-2011") {
+            drawPlot(data);
+        } else if (year=="2012-2022") {
+            drawPlot(data);
+        } 
+    });      
 }
 
 function makeMorphologyPieChart(year) {
-
     console.log("makeMorphologyPieChart function");     
 
+    //////////////////////////////////////////////
     function drawPlot(plotData) {
         keys = Object.keys(plotData);
         values = Object.values(plotData);    
@@ -194,21 +176,27 @@ function makeMorphologyPieChart(year) {
         
         Plotly.newPlot("pie1", data, layout);
     }
+    //////////////////////////////////////////////
 
-    const url = "/aggregate3";
+    const url = "/volcanos_by_morphology";
 
     d3.json(url).then(function (data) {
         console.log(data);
-        drawPlot(data);  
-    });       
-    
+        if (year=="ENTIRE DATASET (2000-2022)") {
+            drawPlot(data);
+        } else if (year=="2000-2011") {
+            drawPlot(data);
+        } else if (year=="2012-2022") {
+            drawPlot(data);
+        }        
+    });     
 }  
-
 
 function makeLinePlot(year) {
 
     console.log("makeLinePlot function");     
 
+    //////////////////////////////////////////////
     function drawPlot(plotData) {     
        
         keys = Object.keys(plotData);
@@ -229,23 +217,27 @@ function makeLinePlot(year) {
         Plotly.newPlot("eruptions-linechart", data, layout);
 
     }
+    //////////////////////////////////////////////
 
-    const url = "/aggregate1";  
+    const url = "/volcanoes_by_year";  
 
     d3.json(url).then(function (data) {
-        console.log(data);
-        drawPlot(data);  
+        console.log("volcanoes_by_year data: ", data);
+        if (year=="ENTIRE DATASET (2000-2022)") {
+            drawPlot(data);
+        } else if (year=="2000-2011") {
+            drawPlot(data);
+        } else if (year=="2012-2022") {
+            drawPlot(data);
+        }
+          
     });    
 
-}
- 
- 
+} 
 
-function init() {    
-    console.clear;
-   
-    makeDropDownList();         
-             
+function init() {
+    console.log("init() function")
+    makeDropDownList();     
 }
 
 init();
