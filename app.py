@@ -24,6 +24,10 @@ def index():
 def map():
     return render_template("map.html")
 
+@app.route("/new")
+def new():
+    return render_template("new.html")
+
 @app.route("/volcano")
 def ServeVolcano():
    return render_template("volcano.html")

@@ -4,12 +4,21 @@ console.log("This is logic.js");
 
 // Create map object
 
-let map = L.map("map").setView([0.9619, 114.5548], 4);
+let map = L.map("map").setView([0.9619, 114.5548], 3);
 
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  maxZoom: 13,
-  attribution: "© OpenStreetMap",
-}).addTo(map);
+// L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+//   maxZoom: 13,
+//   attribution: "© OpenStreetMap",
+// }).addTo(map);
+
+L.tileLayer(
+  "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
+  {
+    maxZoom: 25,
+    attribution:
+      '© <a href="https://stadiamaps.com/">Stadia Maps</a>, © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+  }
+).addTo(map);
 
 // API
 
