@@ -1,7 +1,21 @@
+from lib2to3.pgen2.pgen import DFAState
 from flask import Flask, render_template, jsonify
 import pandas as pd
 import requests
 import etl
+
+global df
+
+def call_api():
+    global df
+    the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
+         
+    df = pd.DataFrame(data=the_json["items"])
+    df = df[["id","name","country","year","morphology","vei","deathsTotal",\
+                "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
+                "housesDestroyedTotal"]]
+    
+    return df
 
 #############################################################
 # BEGIN FLASK ROUTING
@@ -43,73 +57,55 @@ def ReadMongoDB():
     data = etl.fetch()
     return jsonify(data)
 
-@app.route("/aggregate1")
-def aggregate1():
-    the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
-    df = pd.DataFrame(data=the_json["items"])
-    df = df[["id","name","country","year","morphology","vei","deathsTotal",\
-             "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
-             "housesDestroyedTotal"]]
+@app.route("/volcanoes_by_year")
+def volcanoes_by_year():
+    global df
+    df = call_api()       
+    vol_by_yr = df.groupby("year")["id"].count().to_dict()
     
-    volcanos_by_year = df.groupby("year")["id"].count().to_dict()
-    
-    return jsonify(volcanos_by_year)     
+    return jsonify(vol_by_yr)     
 
-@app.route("/aggregate2")
-def aggregate2():
-    the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
-    df = pd.DataFrame(data=the_json["items"])
-    df = df[["id","name","country","year","morphology","vei","deathsTotal",\
-             "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
-             "housesDestroyedTotal"]]
-    
-    volcanos_by_country = df.groupby(["country"])["id"].count().sort_values(ascending=False).to_dict()
+@app.route("/volcanos_by_country")
+def volcanos_by_country():
+    global df
+    df = call_api()  
+    vol_by_ctry = df.groupby(["country"])["id"].count().sort_values(ascending=False).to_dict()
 
-    return jsonify(volcanos_by_country)
+    return jsonify(vol_by_ctry)
 
-@app.route("/aggregate3")
-def aggregate3():
-    the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
-    df = pd.DataFrame(data=the_json["items"])
-    df = df[["id","name","country","year","morphology","vei","deathsTotal",\
-             "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
-             "housesDestroyedTotal"]]
-    
-    volcanos_by_morphology = df.groupby(["morphology"])["id"].count().to_dict()
+@app.route("/volcanos_by_morphology")
+def volcanos_by_morphology():
+    global df
+    df = call_api()
+    vol_by_morph = df.groupby(["morphology"])["id"].count().to_dict()
 
-    return jsonify(volcanos_by_morphology)
+    return jsonify(vol_by_morph)
 
-@app.route("/aggregate4")
-def aggregate4():
-    the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
-    df = pd.DataFrame(data=the_json["items"])
-    df = df[["id","name","country","year","morphology","vei","deathsTotal",\
-             "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
-             "housesDestroyedTotal"]]
-    
-    volcanos_by_vei = df.groupby(["vei"])["id"].count().to_dict()
+@app.route("/volcanos_by_vei")
+def volcanos_by_vei():
+    global df
+    df = call_api()    
+    vol_by_vei = df.groupby(["vei"])["id"].count().to_dict()
 
-    return jsonify(volcanos_by_vei)
+    return jsonify(vol_by_vei)
 
-@app.route("/aggregate5")
-def aggregate5():
-    the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
-    df = pd.DataFrame(data=the_json["items"])
-    df = df[["id","name","country","year","morphology","vei","deathsTotal",\
-             "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
-             "housesDestroyedTotal"]]
-    
-    summ_stats_df = pd.DataFrame(index=["Deaths", "Injuries", "Houses Destroyed", "Damages ($)"], 
-    data=[round(df["deathsTotal"].sum()), round(df["injuriesTotal"].sum()), round(df["housesDestroyedTotal"].sum()), round(df["damageMillionsDollarsTotal"].sum())])
+@app.route("/summary_data")
+def summary_data():
+    global df
+    df = call_api()
+    deaths = round(df["deathsTotal"].sum())
+    injuries = round(df["injuriesTotal"].sum())
+    houses = round(df["housesDestroyedTotal"].sum())
+    damages = round(df["damageMillionsDollarsTotal"].sum())
 
-    return jsonify(summ_stats_df.to_dict()[0])
+    summ_data = {"Deaths": deaths, "Injuries": injuries, 
+                 "Houses Destroyed": houses, "Damages ($ millions)": damages}
 
-
-    
-if __name__ == "__main__":
-    app.run(debug=True)
+    return jsonify(summ_data)
 
 #############################################################
 # END FLASK ROUTING
 #############################################################
-
+    
+if __name__ == "__main__":
+    app.run(debug=True)
