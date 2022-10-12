@@ -62,10 +62,83 @@
 
    <container>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-5 mt-5 ms-2 mb-3 me-3">
+            <h4>Explore Volcanoes by Type and VEI</h4>
+            <p>This map allows you to explore the different volcanoes in the data set by their morphological type. 
+                The different colors and sizes of the markers refer to the Volcanic Explosivity Index (VEI) of that particular eruption. 
+                Click on the volcano marker for more details about it.</p>
+            <p>The images to the left show real life examples of the different morphological types. All volcanoes shown here are included in the dataset, though some images may be of previous eruptions.</p>
+        </div>
+        <div class="col-md-6 mt-5">
+                <!-- Carousel -->
+                <div id="volcanoTypes" class="carousel slide carousel-dark" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#volcanoTypes" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#volcanoTypes" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#volcanoTypes" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#volcanoTypes" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    <button type="button" data-bs-target="#volcanoTypess" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                    <button type="button" data-bs-target="#volcanoTypes" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active ">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Etna_eruption_seen_from_the_International_Space_Station.jpg/1920px-Etna_eruption_seen_from_the_International_Space_Station.jpg" class="d-block w-100 scaled" alt="Mount Eta from International Space Station">
+                    <div class="carousel-caption d-none d-md-block mb-4 ">
+                        <h5>Mount Etna (stratovolcano)</h5>
+                        <small>Photo by NASA (From the International Space Station), Public Domain</small>
+                    </div>
+                    </div>
+                    <div class="carousel-item ">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/L%27Eyjafjallaj%C3%B6kull_sous_les_aurores_bor%C3%A9ales.jpg" class="d-block w-100 scaled" alt="Eyjafjallajökull with aurora">
+                    <div class="carousel-caption d-none d-md-block mb-4 ">
+                        <h5>Eyjafjallajökull (stratovolcano)</h5>
+                        <small>Photo by <a href="https://commons.wikimedia.org/wiki/User:Thaumazein1">Sébastien Giguère</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons BY-SA 4.0</a></small>
+                    </div>
+                    </div>
+                    <div class="carousel-item ">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Kiso_Ontake.jpg" class="d-block w-100 scaled" alt="Ontake-san">
+                    <div class="carousel-caption d-none d-md-block mb-4 ">
+                        <h5>Ontake-san (complex volcano)</h5>
+                        <small>Photo from Atsushi Ueda, licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons BY-SA 3.0</a></small>
+                    </div>
+                    </div>
+                    <div class="carousel-item ">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Mount_Karthala_%2811000398163%29.jpg" class="d-block w-100 scaled" alt="Mount Karthala">
+                    <div class="carousel-caption d-none d-md-block mb-4">
+                        <h5>Mount Karthala (shield volcano)</h5>
+                        <small>Photo by <a href="https://www.flickr.com/people/79721788@N00">David Stanley</a>, licensed under <a href="https://creativecommons.org/licenses/by/2.0/">Creative Commons BY 2.0</a></small>
+                    </div>
+                    </div>
+                    <div class="carousel-item ">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Pacaya_erupting_in_1976.jpg" class="d-block w-100 scaled" alt="Pacaya">
+                    <div class="carousel-caption d-none d-md-block mb-4">
+                        <h5>Pacaya (complex volcano)</h5>
+                        <small>Photo from USGS, Public Domain</small>
+                    </div>
+                    </div>
+                    <div class="carousel-item ">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/The_chait%C3%A9n_volcano_in_eruption_october_2008_chile_xi_region.jpg" class="d-block w-100 scaled" alt="Chaitén">
+                    <div class="carousel-caption d-none d-md-block mb-4">
+                        <h5>Chaitén (caldera)</h5>
+                        <small>Photo by Gerard Prins , licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons BY-SA 3.0</a></small>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <!-- end carousel -->
+        </div>
+        
+            
+        
+    </div>
+    </container>
+    <container class=" d-flex align-items-center justify-content-center">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
             <div id="map"></div>
         </div>
     </div>
+
    </container>
     
 

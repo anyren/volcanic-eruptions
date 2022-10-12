@@ -7,10 +7,16 @@ function createMap(markers, stratovolcano,shieldVolcano, submarineVolcano,calder
     let streetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
+    let darkmap = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      })
 
     // Create a baseMaps object to hold the tile layers.
     let baseMaps = {
+        "Dark Map" : darkmap,
         "Street Map": streetmap,
+        
       };
     
     // Create an overlayMaps object 
@@ -30,7 +36,7 @@ function createMap(markers, stratovolcano,shieldVolcano, submarineVolcano,calder
     let map = L.map("map", {
         center: [40.866667, 34.566667], //geographical center of earth from https://en.wikipedia.org/wiki/Geographical_centre_of_Earth
         zoom: 2,
-        layers: [streetmap, markers]
+        layers: [darkmap, markers]
       });
 
     //control layer
