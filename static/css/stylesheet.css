@@ -17,15 +17,34 @@
 
 #map{
     height: 700px;
+    width: 1300px;
+    
 }
 
 body,html{
     height: 100%;
 }
 
+/* img.scaled{
+  height: 50%;
+  width: 50%;
+} */
+.carousel-item img {
+  /* background-color: black; */
+  object-fit: contain;
+  object-position: center;
+  height: 50vh;
+  overflow: hidden;
+}
+.carousel-caption {
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
 .legend {
     padding: 6px 8px;
-    font: 14px Arial, Helvetica, sans-serif;
+    font: 12px Arial, Helvetica, sans-serif;
     background: white;
     background: rgba(255, 255, 255, 0.8);
     line-height: 24px;
@@ -35,7 +54,7 @@ body,html{
 
 .legend h4 {
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     margin: 2px 12px 8px;
     color: #777;
 }
@@ -63,8 +82,11 @@ body,html{
 
 #drop-down-card {
     text-align: center;
-
 }
+ 
+  .timelapse{
+    background-color: #FFF8E2;
+  }
 
  th {
     text-align: center;       
