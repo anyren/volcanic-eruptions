@@ -70,15 +70,22 @@
 
                 <!-- id=drop-down-card -->
                 <div class="card text-center" id="drop-down-card">   
+                    <div class="card-header">                        
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">Year</h5>                        
                         <select id="selectYear" onchange="newYearSelected(this.value)">                       
                         </select>
-                        <br><br> <br><hr>
-                        <h5 class="heading">Data</h5>
-                        
+                        <hr>
+                        <h5 class="heading">Data</h5>                                               
                         <div id="data-table"></div>
-                    </div>              
+                    </div> 
+                    <div class="img text-left">
+                        <!-- "This SVG image was created by Medium69.
+                        Cette image SVG a été créée par Medium69.
+                        Please credit this : William Crochot, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" -->
+                        <a href="https://commons.wikimedia.org/wiki/File:Structure_volcano-en.svg"><img width="275" alt="Structure volcano-en" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Structure_volcano-en.svg/512px-Structure_volcano-en.svg.png"></a>
+                    </div>                      
                 </div>
 
             </div>
@@ -87,7 +94,9 @@
             <div class="col-md-8">
 
                 <!-- id=volcanoes-by-country-card -->
-                <div class="card text-center" id="volcanoes-by-country-card">        
+                <div class="card text-center" id="volcanoes-by-country-card">   
+                    <div class="card-header">                        
+                    </div>     
                     <div class="card-body">        
                         <h5>Volcanoes by Country</h5>                
                         <div id="volcanoes-by-country-hbarchart"></div>
@@ -107,6 +116,8 @@
 
                 <!-- id=pie1-card -->
                 <div class="card text-center" id="pie1-card">        
+                    <div class="card-header">                        
+                    </div>
                     <div class="card-body">
                         <h5>Morphology</h5>                        
                         <div id="pie1"></div>
@@ -118,6 +129,8 @@
            
                 <!-- id=vei-card -->
                 <div class="card text-center" id="vei-card">        
+                    <div class="card-header">                        
+                    </div>
                     <div class="card-body">      
                         <h5>Volcanoes by VEI</h5>
                         <div id="vei-piechart"></div>
@@ -136,7 +149,9 @@
             <div class="col-md-12">
            
                 <!-- id=eruptions-card -->
-                <div class="card text-center" id="eruptions-card">        
+                <div class="card text-center" id="eruptions-card">                
+                    <div class="card-header">                        
+                    </div>
                     <div class="card-body">      
                         <h5>Number of Eruptions</h5>
                         <div id="eruptions-linechart"></div>

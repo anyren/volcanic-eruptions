@@ -6,11 +6,16 @@ import etl
 def call_api(year):
     global df
     the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
-         
-    df = pd.DataFrame(data=the_json["items"])
-    df = df[["id","name","country","year","morphology","vei","deathsTotal",\
-                "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
-                "housesDestroyedTotal"]]
+
+    try:     
+
+        df = pd.DataFrame(data=the_json["items"])
+        df = df[["id","name","country","year","morphology","vei","deathsTotal",\
+                    "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
+                    "housesDestroyedTotal"]]
+    except:
+        
+        print("Error making dataframe")
 
     df_2000_2022 = df.copy()
     df_2000_2011 = df.loc[(df["year"]<=2011), :]
@@ -28,11 +33,18 @@ def call_api(year):
     else:
         return df 
 
+def validate_year(year):    
+    if year in ["2000-2022", "2000-2011", "2012-2022"]:
+        return year
+    else:
+        return "2000-2022"     
+
 #############################################################
 # BEGIN FLASK ROUTING
 #############################################################
 
 app = Flask(__name__)
+app.config["JSON_SORT_KEYS"] = False
 
 #############################################################
 # Index endpoint
@@ -71,7 +83,7 @@ def ReadMongoDB():
 @app.route("/volcanoes_by_year/<year>")
 def volcanoes_by_year(year):
     global df
-    df = call_api(year)       
+    df = call_api(validate_year(year))       
     vol_by_yr = df.groupby("year")["id"].count().to_dict()
     
     return jsonify(vol_by_yr)     
@@ -79,7 +91,7 @@ def volcanoes_by_year(year):
 @app.route("/volcanos_by_country/<year>")
 def volcanos_by_country(year):
     global df
-    df = call_api(year)  
+    df = call_api(validate_year(year))  
     vol_by_ctry = df.groupby(["country"])["id"].count().sort_values(ascending=False).to_dict()
 
     return jsonify(vol_by_ctry)
@@ -87,7 +99,7 @@ def volcanos_by_country(year):
 @app.route("/volcanos_by_morphology/<year>")
 def volcanos_by_morphology(year):
     global df
-    df = call_api(year)
+    df = call_api(validate_year(year))
     vol_by_morph = df.groupby(["morphology"])["id"].count().sort_values(ascending=False).to_dict()
 
     return jsonify(vol_by_morph)
@@ -95,7 +107,7 @@ def volcanos_by_morphology(year):
 @app.route("/volcanos_by_vei/<year>")
 def volcanos_by_vei(year):
     global df
-    df = call_api(year)    
+    df = call_api(validate_year(year))    
     vol_by_vei = df.groupby(["vei"])["id"].count().sort_values(ascending=False).to_dict()
 
     return jsonify(vol_by_vei)
@@ -103,7 +115,7 @@ def volcanos_by_vei(year):
 @app.route("/summary_data/<year>")
 def summary_data(year):
     global df
-    df = call_api(year)
+    df = call_api(validate_year(year))
     deaths = round(df["deathsTotal"].sum())
     injuries = round(df["injuriesTotal"].sum())
     houses = round(df["housesDestroyedTotal"].sum())

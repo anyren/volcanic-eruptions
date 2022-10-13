@@ -16,9 +16,10 @@ function newYearSelected(year) {
 function makeDropDownList() {
     console.clear();
     let dropDownList = d3.select("#selectYear");
-    let defaultYear = "ENTIRE DATASET (2000-2022)";
+    let defaultYear = "2000-2022";
 
-    dropDownList.append("option").text(defaultYear).attr("value", "2000-2022").attr("selected", true);
+    dropDownList.append("option").text("--Select year range--").attr("value", "2000-2022").attr("selected", true);
+    dropDownList.append("option").text(defaultYear).attr("value", "2000-2022");
     dropDownList.append("option").text("2000-2011").attr("value", "2000-2011");
     dropDownList.append("option").text("2012-2022").attr("value", "2012-2022");
 
@@ -41,15 +42,12 @@ function makeDataTable(year) {
         
         d3.select("#data-table").html("");
         let demoTable = d3.select("#data-table").append("table").attr("class", "table table-striped");
-
+        demoTable.append("tbody").append("tr").append("th").attr("colspan", "2").text(year);
+               
         for (let i=0; i<keys.length; i++) {
             demoTable.append("tbody").append("tr").text(keys[i]).append("td").text(values[i]);
         }                    
     });            
-}
-
-function compareNumbers(a, b) {
-    return b - a;
 }
 
 function makeHBarChart(year) { 
@@ -66,7 +64,7 @@ function makeHBarChart(year) {
             x: values.reverse(), 
             y: keys.reverse(),
             type: "bar",
-            orientation: "h",            
+            orientation: "h",                     
         };
 
         let layout = {     
@@ -79,7 +77,8 @@ function makeHBarChart(year) {
                 dtick: 1,
                 automargin: true
             },
-            bargap : 5,           
+            bargap : 5,   
+            title: year          
         };
     
         let data = [trace];
@@ -108,13 +107,12 @@ function makeVEIPieChart(year) {
             labels: keys,        
             type: 'pie',
             textinfo: "label+percent",
-            insidetextorientation: "auto"
+            insidetextorientation: "auto",
+            title: year            
         }];
         
         let layout = [{
-            autosize: true,
-            // height: 400,
-            // width: 350
+            autosize: true           
         }];
         
         Plotly.newPlot("vei-piechart", data, layout);
@@ -143,6 +141,7 @@ function makeMorphologyPieChart(year) {
             type: 'pie',
             textinfo: "label+percent",
             insidetextorientation: "auto",
+            title: year
 
         }];
         
@@ -150,7 +149,7 @@ function makeMorphologyPieChart(year) {
             autosize: true,
             height: 550,
             width: 950,
-            
+                        
         }];
         
         Plotly.newPlot("pie1", data, layout);
@@ -186,7 +185,7 @@ function makeLinePlot(year) {
         };    
                
         data = [trace];
-        let layout = {autosize: true};        
+        let layout = {autosize: true, title: year};        
         Plotly.newPlot("eruptions-linechart", data, layout);
 
     }
