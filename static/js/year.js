@@ -27,24 +27,15 @@ function makeDropDownList() {
 
 function makeDataTable(year) {
     console.log("makeDataTable function");
-    const url = "/summary_data";    
+    let url = "/summary_data/" + year;    
 
     d3.json(url).then(function (data) {   
         console.log("makeDataTable data:", data);
         let keys = Object.keys(data);
-        let values = Object.values(data); 
-
-        if (year=="ENTIRE DATASET (2000-2022)") {
-            keys = Object.keys(data);
-            values = Object.values(data); 
-        } else if (year=="2000-2011") {
-            keys = Object.keys(data);
-            values = Object.values(data); 
-        } else if (year=="2012-2022") {
-            keys = Object.keys(data);
-            values = Object.values(data); 
-        }                       
-
+        let values = Object.values(data);         
+        keys = Object.keys(data);
+        values = Object.values(data); 
+                   
         console.log("KEYS: ", keys);
         console.log("VALS: ", values);   
         
@@ -96,17 +87,11 @@ function makeHBarChart(year) {
     }
     //////////////////////////////////////////////
 
-    const url = "/volcanos_by_country";
+    let url = "/volcanos_by_country/" + year;
 
     d3.json(url).then(function (data) {
         console.log("volcanos_by_country data: ", data);
-        if (year=="ENTIRE DATASET (2000-2022)") {
-            drawPlot(data);
-        } else if (year=="2000-2011") {
-            drawPlot(data);
-        } else if (year=="2012-2022") {
-            drawPlot(data);
-        }
+            drawPlot(data);      
     });      
 }
     
@@ -136,17 +121,11 @@ function makeVEIPieChart(year) {
     }
     //////////////////////////////////////////////
 
-    const url = "/volcanos_by_vei";
+    let url = "/volcanos_by_vei/" + year;
 
     d3.json(url).then(function (data) {
         console.log(data);
-        if (year=="ENTIRE DATASET (2000-2022)") {
-            drawPlot(data);
-        } else if (year=="2000-2011") {
-            drawPlot(data);
-        } else if (year=="2012-2022") {
-            drawPlot(data);
-        } 
+        drawPlot(data);      
     });      
 }
 
@@ -178,17 +157,11 @@ function makeMorphologyPieChart(year) {
     }
     //////////////////////////////////////////////
 
-    const url = "/volcanos_by_morphology";
+    let url = "/volcanos_by_morphology/" + year;
 
     d3.json(url).then(function (data) {
         console.log(data);
-        if (year=="ENTIRE DATASET (2000-2022)") {
-            drawPlot(data);
-        } else if (year=="2000-2011") {
-            drawPlot(data);
-        } else if (year=="2012-2022") {
-            drawPlot(data);
-        }        
+            drawPlot(data);              
     });     
 }  
 
@@ -219,18 +192,11 @@ function makeLinePlot(year) {
     }
     //////////////////////////////////////////////
 
-    const url = "/volcanoes_by_year";  
+    let url = "/volcanoes_by_year/" + year;  
 
     d3.json(url).then(function (data) {
         console.log("volcanoes_by_year data: ", data);
-        if (year=="ENTIRE DATASET (2000-2022)") {
-            drawPlot(data);
-        } else if (year=="2000-2011") {
-            drawPlot(data);
-        } else if (year=="2012-2022") {
-            drawPlot(data);
-        }
-          
+        drawPlot(data);                 
     });    
 
 } 
