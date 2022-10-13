@@ -104,7 +104,7 @@ function createLayer() {
 
 let map = L.map("map", {
   center: [0, 0],
-  zoom: 3,
+  zoom: 2,
   layers: [darkMode, allMarker],
 });
 
@@ -158,6 +158,7 @@ legend.onAdd = function () {
   let depth = [0, 1, 2, 3, 4, 5, 6, 7, 8, "UKN"];
 
   // loop through our density intervals and generate a label with a colored square for each interval
+  div.innerHTML += "<h5>VEI</h5>";
   for (let i = 0; i < depth.length; i++) {
     div.innerHTML +=
       '<i style="background:' +

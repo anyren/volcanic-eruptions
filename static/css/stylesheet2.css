@@ -1,19 +1,21 @@
 #time {
-  margin: 10px 10%;
-  border: 2px solid #000;
-  border-radius: 5px;
-  height: 30px;
-  background: #f0f8ff;
+  margin: 5px 10%;
+  /* border: 1px solid #000; */
+  /* border-radius: 5px; */
+  height: 40px;
+  width: 150px;
+  /* background: #f0f8ff; */
+  font-size: smaller;
 }
 
 #clickMe {
   margin: 10px 10%;
 }
 
-body {
-  /* padding: 0; */
+/* body {
+  padding: 0;
   margin: 0;
-}
+} */
 
 body,
 html {
@@ -21,10 +23,11 @@ html {
   width: 100%;
 }
 #map {
-  margin: 5px 10%;
+  /* margin: 5px 10%; */
   border: 2px solid #000;
-  border-radius: 5px;
-  height: 1000px;
+  /* border-radius: 5px; */
+  height: 700px;
+  width: 1300px;
   overflow: hidden;
   background: #f0f8ff;
 }
@@ -50,7 +53,7 @@ html {
   color: rgb(247, 226, 226);
   background-color: rgb(91, 116, 138);
   padding: 15px;
-  font-size: 22px;
+  font-size: 16px;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   margin-right: 25px !important;
