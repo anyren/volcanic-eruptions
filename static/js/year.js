@@ -17,9 +17,8 @@ function makeDropDownList() {
     console.clear();
     let dropDownList = d3.select("#selectYear");
     let defaultYear = "2000-2022";
-
-    dropDownList.append("option").text("--Select year range--").attr("value", "2000-2022").attr("selected", true);
-    dropDownList.append("option").text(defaultYear).attr("value", "2000-2022");
+    
+    dropDownList.append("option").text(defaultYear).attr("value", "2000-2022").attr("selected", true);
     dropDownList.append("option").text("2000-2011").attr("value", "2000-2011");
     dropDownList.append("option").text("2012-2022").attr("value", "2012-2022");
 
@@ -42,10 +41,10 @@ function makeDataTable(year) {
         
         d3.select("#data-table").html("");
         let demoTable = d3.select("#data-table").append("table").attr("class", "table table-striped");
-        demoTable.append("tbody").append("tr").append("th").attr("colspan", "2").text(year);
+        demoTable.append("thead").append("tr").append("th").attr("colspan", "2").text(year);      
                
         for (let i=0; i<keys.length; i++) {
-            demoTable.append("tbody").append("tr").text(keys[i]).append("td").text(values[i]);
+            demoTable.append("tbody").append("tr").text(keys[i]).append("td").text(values[i]);                   
         }                    
     });            
 }
