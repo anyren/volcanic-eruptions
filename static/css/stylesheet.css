@@ -76,12 +76,21 @@ body,html{
     background-color: #FFF8E2;
 }
 
+.card-header {
+    background-color: grey;
+}
+
 #data-table {
     text-align: left;
 }
 
 #drop-down-card {
     text-align: center;
+    background-color: white;
+}
+
+#white-header {
+    background-color: white;
 }
  
   .timelapse{
@@ -92,6 +101,7 @@ body,html{
     text-align: center;       
 }
 
- .card-header {
-  background-color: grey;
+#selectYear {
+    background-color: orange;
+
 }
