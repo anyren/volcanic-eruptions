@@ -18,7 +18,7 @@ def extract():
     
     maxYear=2022
     minYear=2000
-    url = f"https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear={maxYear}&minYear={minYear}"
+    url = f"https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000"
 
     # Make request and store response
     response = requests.get(url)
