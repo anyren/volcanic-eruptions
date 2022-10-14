@@ -8,18 +8,20 @@ def call_api(year):
     the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
 
     try:     
-
         df = pd.DataFrame(data=the_json["items"])
         df = df[["id","name","country","year","morphology","vei","deathsTotal",\
                     "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
                     "housesDestroyedTotal"]]
-    except:
-        
+    except:        
         print("Error making dataframe")
 
     df_2000_2022 = df.copy()
-    df_2000_2011 = df.loc[(df["year"]<=2011), :]
-    df_2012_2022 = df.loc[((df["year"]>=2012) & (df["year"]<=2022)), :]
+
+    try:
+        df_2000_2011 = df.loc[(df["year"]<=2011), :]
+        df_2012_2022 = df.loc[((df["year"]>=2012) & (df["year"]<=2022)), :]
+    except:
+        return df
 
     if year == "2000-2022":
         return df_2000_2022
@@ -45,6 +47,7 @@ def validate_year(year):
 
 app = Flask(__name__)
 app.config["JSON_SORT_KEYS"] = False
+app.config["SEND_FILE_MAX_PAGE_DEFAULT"] = 0
 
 #############################################################
 # Index endpoint
