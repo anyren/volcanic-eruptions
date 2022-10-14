@@ -145,10 +145,7 @@ function makeMorphologyPieChart(year) {
         }];
         
         layout = [{
-            autosize: true,
-            height: 550,
-            width: 950,
-                        
+            autosize: true                           
         }];
         
         Plotly.newPlot("pie1", data, layout);
