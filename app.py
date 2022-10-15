@@ -6,6 +6,9 @@ import etl
 def call_api(year):
     global df
     the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
+    empty_df = pd.DataFrame(columns=["id","name","country","year","morphology","vei","deathsTotal",\
+                    "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
+                    "housesDestroyedTotal"])
 
     try:     
         df = pd.DataFrame(data=the_json["items"])
@@ -13,30 +16,64 @@ def call_api(year):
                     "missingTotal","injuriesTotal","damageMillionsDollarsTotal",\
                     "housesDestroyedTotal"]]
     except:        
-        print("Error making dataframe")
+        print("Error making dataframe")                            
+        return empty_df
 
-    df_2000_2022 = df.copy()
+    # Define Year Range Dataframes
 
-    try:
-        df_2000_2011 = df.loc[(df["year"]<=2011), :]
+    df_dict = {}
+
+    try:          
+        df_2000_2022 = df.copy()
+        df_2000_2022.index.name = "2000-2022"
+        df_dict[df_2000_2022.index.name] = df_2000_2022
+
+        df_2000_2011 = df.loc[((df["year"]>=2000) & (df["year"]<=2011)), :]
+        df_2000_2011.index.name = "2000-2011"
+        df_dict[df_2000_2011.index.name] = df_2000_2011
+
         df_2012_2022 = df.loc[((df["year"]>=2012) & (df["year"]<=2022)), :]
-    except:
-        return df
+        df_2012_2022.index.name = "2012-2022"        
+        df_dict[df_2012_2022.index.name] = df_2012_2022
 
-    if year == "2000-2022":
-        return df_2000_2022
+        df_2000_2004 = df.loc[((df["year"]>=2000) & (df["year"]<=2004)), :]
+        df_2000_2004.index.name = "2000-2004"
+        df_dict[df_2000_2004.index.name] = df_2000_2004
 
-    elif year == "2000-2011":
-        return df_2000_2011
+        df_2005_2009 = df.loc[((df["year"]>=2005) & (df["year"]<=2009)), :]
+        df_2005_2009.index.name = "2005-2009"
+        df_dict[df_2005_2009.index.name] = df_2005_2009
 
-    elif year == "2012-2022":
-        return df_2012_2022
+        df_2010_2014 = df.loc[((df["year"]>=2010) & (df["year"]<=2014)), :]
+        df_2010_2014.index.name = "2010-2014"
+        df_dict[df_2010_2014.index.name] = df_2010_2014
+
+        df_2015_2019 = df.loc[((df["year"]>=2015) & (df["year"]<=2019)), :]
+        df_2015_2019.index.name = "2015-2019"
+        df_dict[df_2015_2019.index.name] = df_2015_2019
+
+        df_2020_2022 = df.loc[((df["year"]>=2020) & (df["year"]<=2022)), :]
+        df_2020_2022.index.name = "2020-2022"
+        df_dict[df_2020_2022.index.name] = df_2020_2022
+
+    except: 
+        print("Error making dataframe")                            
+        return empty_df
+
+    year_range_list = df_dict.keys() 
+    
+    if year in year_range_list:
+        
+        return df_dict[year]
 
     else:
-        return df 
+
+        print("Error finding year range")                            
+        return empty_df
 
 def validate_year(year):    
-    if year in ["2000-2022", "2000-2011", "2012-2022"]:
+    if year in ["2000-2022", "2000-2011", "2012-2022", "2000-2004",\
+        "2005-2009", "2010-2014", "2015-2019", "2020-2022"]:
         return year
     else:
         return "2000-2022"     
