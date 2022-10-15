@@ -19,8 +19,15 @@ function makeDropDownList() {
     let defaultYear = "2000-2022";
     
     dropDownList.append("option").text(defaultYear).attr("value", "2000-2022").attr("selected", true);
+    dropDownList.append("option").text("──────────").attr("value", "").attr("disabled", true);    
     dropDownList.append("option").text("2000-2011").attr("value", "2000-2011");
     dropDownList.append("option").text("2012-2022").attr("value", "2012-2022");
+    dropDownList.append("option").text("──────────").attr("value", "").attr("disabled", true);
+    dropDownList.append("option").text("2000-2004").attr("value", "2000-2004");
+    dropDownList.append("option").text("2005-2009").attr("value", "2005-2009");
+    dropDownList.append("option").text("2010-2014").attr("value", "2010-2014");
+    dropDownList.append("option").text("2015-2019").attr("value", "2015-2019");
+    dropDownList.append("option").text("2020-2022").attr("value", "2020-2022");
 
     newYearSelected(defaultYear);     
 }
@@ -181,7 +188,11 @@ function makeLinePlot(year) {
         };    
                
         data = [trace];
-        let layout = {autosize: true, title: year};        
+        let layout = {
+            autosize: true, 
+            title: year, 
+            xaxis: {tickvals: keys}
+        };        
         Plotly.newPlot("eruptions-linechart", data, layout);
 
     }
