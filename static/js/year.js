@@ -76,7 +76,10 @@ function makeHBarChart(year) {
         let layout = {     
             autosize: true,
             showlegend: false,
-            xaxis: {tickangle: 0},
+            xaxis: {
+                tickangle: 0,
+                tickvals: values
+            },
             yaxis: {
                 zeroline: true,
                 gridwidth: 5,
