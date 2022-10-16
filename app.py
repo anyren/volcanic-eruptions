@@ -171,6 +171,11 @@ def summary_data(year):
 
     return jsonify(summ_data)
 
+@app.route("/graphs")
+def makeGraph():
+    return render_template("moe.html")
+
+
 #############################################################
 # END FLASK ROUTING
 #############################################################
