@@ -101,7 +101,8 @@ function makeHBarChart(year) {
             x: values.reverse(), 
             y: keys.reverse(),
             type: "bar",
-            orientation: "h",                     
+            orientation: "h"      
+                     
         };
 
         let layout = {     
@@ -115,9 +116,9 @@ function makeHBarChart(year) {
                 zeroline: true,
                 gridwidth: 5,
                 dtick: 1,
-                automargin: true
+                automargin: true                
             },
-            bargap : 5,   
+            bargap : 15,   
             title: year          
         };
     
@@ -151,11 +152,12 @@ function makeVEIPieChart(year) {
             textinfo: "label+percent",
             insidetextorientation: "auto",
             title: year,
-            hole: .4            
+            hole: .4
+                        
         }];
         
         let layout = [{
-            autosize: true                      
+            autosize: true                                
         }];
         
         Plotly.newPlot("vei-piechart", data, layout);
@@ -184,10 +186,11 @@ function makeMorphologyPieChart(year) {
             values: values,
             labels: keys,
             type: 'pie',
-            textinfo: "label+percent",
+            textinfo: "percent",
             insidetextorientation: "auto",
             title: year,
-            hole: .4
+            rotation: 90,
+            hole: .4        
 
         }];
         
