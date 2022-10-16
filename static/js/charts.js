@@ -17,16 +17,28 @@ d3.json("/readmongodb").then(function(data) {
     console.log('Lookin at year');
     console.log(years);
 
+    let death = items.map(d => d.deaths);
+    console.log('Looking at deaths');
+    console.log(death);
+
+    let country = items.map(c => c.country);
+    console.log("looking at countries");
+    console.log(country);
+
+    let Morph = items.map(m => m.morphology);
+    console.log('looking at morphology');
+    console.log(Morph)
+
     
 
-    // for (let count = 0; count > years )
+    
 
 
     
     
     
     let traceB1 = {
-      x: years,
+      x: death,
       y: veis,
       type: 'bar'
     };
@@ -45,29 +57,23 @@ d3.json("/readmongodb").then(function(data) {
     
     
     // Scatter Plot Code
-    let death = items.map(d => d.deaths);
-    console.log('Looking at deaths')
-    console.log(death)
-
-    let country = items.map(c => c.country);
-    console.log("looking at countries")
-    console.log(country)
 
 
 
-     let Deaths = {
+
+     let morph = {
       x: years,
-      y: death,
+      y: Morph,
       mode: 'markers',
       type: 'scatter',
       name: 'deaths',
       text: ['A-1', 'A-2', 'A-3', 'A-4', 'A-5'],
-      marker: { size: 12 }
+      marker: { size: 10 }
     };
 
     let Countries = {
-      x: country,
-      y: death,
+      x: Morph,
+      y: country,
       mode: 'markers',
       type: 'scatter',
       name: 'Country',
@@ -76,7 +82,7 @@ d3.json("/readmongodb").then(function(data) {
     };
 
     let ScatData = [Countries];
-    let ScatData2 = [Deaths];
+    let ScatData2 = [morph];
 
     let Scatlayout = {
       xaxis: {
@@ -85,7 +91,7 @@ d3.json("/readmongodb").then(function(data) {
       yaxis: {
         range: []
       },
-      title:'Deaths Per Country'
+      title:'Morphology Per Country'
     };
     let Scatlayout2 = {
       xaxis: {
@@ -94,11 +100,11 @@ d3.json("/readmongodb").then(function(data) {
       yaxis: {
         range: []
       },
-      title:'Deaths Per Year'
+      title:'Morphology Per Year'
     };
 
     Plotly.newPlot('scat-by-country', ScatData, Scatlayout);
-    Plotly.newPlot('scat-by-deaths', ScatData2, Scatlayout2);
+    Plotly.newPlot('scat-by-morph', ScatData2, Scatlayout2);
 
 
 
