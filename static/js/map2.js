@@ -7,11 +7,13 @@ let cities = {
 };
 
 d3.json(url).then(function (data) {
+  console.log(data.items)
   data.items.forEach((element) =>
     cities.features.push({
       type: "Feature",
       properties: {
-        name: element.country,
+        name: element.name,
+        country:element.country,
         t: element.year - 1999,
         r: element.vei,
         year: element.year,
@@ -88,7 +90,7 @@ function createLayer() {
       },
       onEachFeature: function (feature, layer) {
         layer.bindPopup(
-          `<strong>${feature.properties.name}</strong> <br>${feature.properties.year} <br><br><b>VEI: </b>${feature.properties.r}`
+          `<h5>${feature.properties.name} (${feature.properties.year})</h5> <b>Country:</b> ${feature.properties.country} <br> <b>Volcano Type:</b> ${feature.properties.vtype}<br><b>VEI: </b>${feature.properties.r}`
         );
       },
       filter: function (feature, layer) {
