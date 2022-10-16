@@ -63,8 +63,8 @@
         <div class="row">
           
             <!-- Column 1 -->
-            <div class="col-sm-4">
-            
+            <div class="col-sm-4">               
+                                
                 <!-- id=drop-down-card -->
                 <div class="card text-center border-0" id="drop-down-card">   
                     <div class="card-header border-0" id="white-header">                        
@@ -74,15 +74,11 @@
                         <select id="selectYear" onchange="newYearSelected(this.value)">                       
                         </select>
                         <br><br>
-                        <div class="img text-center">
-                            <!-- "This SVG image was created by Medium69.
-                            Cette image SVG a été créée par Medium69.
-                            Please credit this : William Crochot, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" -->
-                            <a href="https://commons.wikimedia.org/wiki/File:Structure_volcano-en.svg"><img class="img-fluid" alt="Structure volcano-en" src="/static/images/Structure_volcano-en.svg"></a>
+                        <div class="img text-center" id="image-rotator">                            
+                            <!-- put rotating imgs here -->
                         </div>
                     </div>
-                </div>
-                <br><br>
+                </div>                 
             </div>
 
             <!-- Column 2 -->
@@ -90,14 +86,15 @@
                 
                 <!-- id=data-card -->
                 <div class="card text-center" id="data-card">   
-                    <div class="card-header">                        
+                    <div class="card-header">   
+                        <h5 class="heading">Data</h5>                        
                     </div>
                     <div class="card-body">                                           
-                        <h5 class="heading">Data</h5>                                               
+                                                                    
                         <div id="data-table"></div>                                                          
                     </div>
                     <div class="card-footer text-muted">
-                        <a href="https://www.ncei.noaa.gov/maps/hazards/" class="btn btn-primary">Explore NOAA's Interactive Map!  <span class="badge bg-secondary"> External Resource</span></a>
+                        <a href="https://www.ncei.noaa.gov/maps/hazards/" class="btn btn-primary">Explore NOAA's Interactive Map! <span class="badge bg-secondary"> External Resource</span></a>
                     </div>
                 </div>                                    
                 
@@ -113,10 +110,11 @@
 
                 <!-- id=volcanoes-by-country-card -->
                 <div class="card text-center" id="volcanoes-by-country-card">   
-                    <div class="card-header">                        
+                    <div class="card-header">     
+                        <h5>Volcanoes by Country</h5>                   
                     </div>     
                     <div class="card-body">        
-                        <h5>Volcanoes by Country</h5>                
+                                        
                         <div id="volcanoes-by-country-hbarchart"></div>
                     </div>
                 </div>
@@ -127,66 +125,58 @@
 
          
         <!-- Row 3 -->
-        <div class="row">                
+        <div class="row">     
             
             <!-- Column 1 -->
             <div class="col-sm">
 
-                <!-- id=pie1-card -->
-                <div class="card text-center" id="pie1-card">        
-                    <div class="card-header">                        
+                <!-- id=morph-card -->
+                <div class="card text-center" id="morph-card">        
+                    <div class="card-header">   
+                        <h5>Morphology</h5>                     
                     </div>
                     <div class="card-body">
-                        <h5>Morphology</h5>                        
-                        <div id="pie1"></div>
+                                                
+                        <div id="morph-piechart"></div>
                     </div>
                 </div>
             </div>
+
              <!-- Column 2 -->
              <div class="col-sm">
            
                 <!-- id=vei-card -->
                 <div class="card text-center" id="vei-card">        
-                    <div class="card-header">                        
+                    <div class="card-header">     
+                        <h5>Volcanoes by VEI</h5>                   
                     </div>
                     <div class="card-body">      
-                        <h5>Volcanoes by VEI</h5>
+                        
                         <div id="vei-piechart"></div>
                     </div>
                 </div>
-            </div> 
-
-            
+            </div>             
 
         </div>
 
         <!-- Row 4 -->
-        <div class="row">             
+        <div class="row">   
 
             <!-- Column 1 -->
-            <div class="col-sm">
-           
+            <div class="col-sm">           
                 <!-- id=eruptions-card -->
                 <div class="card text-center" id="eruptions-card">                
-                    <div class="card-header">                        
+                    <div class="card-header">     
+                        <h5>Number of Eruptions</h5>                   
                     </div>
-                    <div class="card-body">      
-                        <h5>Number of Eruptions</h5>
+                    <div class="card-body">                              
                         <div id="eruptions-linechart"></div>
                     </div>
-                </div>
+                </div>                
             </div> 
 
-        </div>
-
-        <!-- Row 5 -->
-        <div class="row">             
-
-           
-
-        </div>
-
-        
+        </div>        
+         
     </div>
 
     <!-- D3 Library -->
