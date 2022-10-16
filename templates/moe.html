@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <section>
+            {% for graph in graphs %}<select name="Menu" id="Menu">Graph Type
+               (% if Bar %) <option value="Bar">Bar</option>
+               (% endif %)
+                <option value="Box-Whisker">Box-n-Whisker</option>
+                <option value="Scatter">Scatter</option>
+            {{graph.type}}</select>{% endfor %}
+        </section>
+    </div>
+
+    <!-- Graphs Container -->
+    <div id="container">
+        <div class="row">
+
+            <!-- Bar -->
+            <div class="col-md-4">
+                <div id="bar"></div>
+            </div>
+            
+            <!-- Scatter -->
+            <div class="col-md-4">
+                <div id="scat-by-country"></div>
+            </div>
+
+            <div class="col-md-4">
+                <div id="scat-by-deaths"></div>
+            </div>
+            
+            <!-- Box-N-Whisker -->
+            <div class="col-md-4">
+                <div id="box"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+    <script src="/static/js/charts.js"></script>
+
+    
+</body>
+</html>
