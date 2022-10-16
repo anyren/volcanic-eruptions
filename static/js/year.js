@@ -1,3 +1,5 @@
+// Refresh all visualizations, data table, and image rotator
+
 function refreshViz(year) {
     console.clear();
     makeDataTable(year);
@@ -5,13 +7,38 @@ function refreshViz(year) {
     makeVEIPieChart(year);
     makeMorphologyPieChart(year);
     makeLinePlot(year);
+    changeImage();
 }
+
+// New year range selected 
 
 function newYearSelected(year) {    
     console.clear();
     console.log("year_selected: ", year);
     refreshViz(year);                  
 }
+
+// Randomly rotate images under dropdown list
+
+function changeImage() {    
+    console.clear();
+    let img_array = Array(
+        "colima.jpg", 
+        "hawaii1.jpg",  
+        "hawaii2.jpg",           
+        "iceland1.png",
+        "iceland2.png",
+        "mayon.jpg",
+        "mud_volcano.png",
+        "smokey_plume.jpg"    
+    );
+    let random_img = img_array[Math.floor(Math.random()*img_array.length)];    
+    let imgRot = d3.select("#image-rotator");
+    imgRot.select("img").remove();
+    imgRot.insert("img").attr("class", "img-fluid").attr("src", "/static/images/" + random_img);                         
+}
+
+// Create dropdown list with all year range selections 
 
 function makeDropDownList() {
     console.clear();
@@ -31,6 +58,8 @@ function makeDropDownList() {
 
     newYearSelected(defaultYear);     
 }
+
+// Populate data table with data specific to year range
 
 function makeDataTable(year) {
     console.log("makeDataTable function");
@@ -55,6 +84,8 @@ function makeDataTable(year) {
         }                    
     });            
 }
+
+// Create horizontal bar chart
 
 function makeHBarChart(year) { 
     console.log("makeHBarChart function");
@@ -102,7 +133,9 @@ function makeHBarChart(year) {
             drawPlot(data);      
     });      
 }
-    
+
+// Create VEI pie chart 
+
 function makeVEIPieChart(year) {
     console.log("makeVEIPieChart function");     
 
@@ -117,11 +150,12 @@ function makeVEIPieChart(year) {
             type: 'pie',
             textinfo: "label+percent",
             insidetextorientation: "auto",
-            title: year            
+            title: year,
+            hole: .4            
         }];
         
         let layout = [{
-            autosize: true           
+            autosize: true                      
         }];
         
         Plotly.newPlot("vei-piechart", data, layout);
@@ -135,6 +169,8 @@ function makeVEIPieChart(year) {
         drawPlot(data);      
     });      
 }
+
+// Create morphology pie chart 
 
 function makeMorphologyPieChart(year) {
     console.log("makeMorphologyPieChart function");     
@@ -150,7 +186,8 @@ function makeMorphologyPieChart(year) {
             type: 'pie',
             textinfo: "label+percent",
             insidetextorientation: "auto",
-            title: year
+            title: year,
+            hole: .4
 
         }];
         
@@ -158,7 +195,7 @@ function makeMorphologyPieChart(year) {
             autosize: true                           
         }];
         
-        Plotly.newPlot("pie1", data, layout);
+        Plotly.newPlot("morph-piechart", data, layout);
     }
     //////////////////////////////////////////////
 
@@ -169,6 +206,8 @@ function makeMorphologyPieChart(year) {
             drawPlot(data);              
     });     
 }  
+
+// Create number of eruptions line chart 
 
 function makeLinePlot(year) {
 
@@ -209,6 +248,8 @@ function makeLinePlot(year) {
     });    
 
 } 
+
+// Initialization 
 
 function init() {
     console.log("init() function")

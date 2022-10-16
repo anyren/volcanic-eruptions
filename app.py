@@ -3,6 +3,8 @@ import pandas as pd
 import requests
 import etl
 
+# Access NOAA API and return pandas dataframe for year range selected 
+
 def call_api(year):
     global df
     the_json = (requests.get("https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000")).json()
@@ -71,10 +73,13 @@ def call_api(year):
         print("Error finding year range")                            
         return empty_df
 
+# Make sure year range selection is valid
+
 def validate_year(year):    
     if year in ["2000-2022", "2000-2011", "2012-2022", "2000-2004",\
         "2005-2009", "2010-2014", "2015-2019", "2020-2022"]:
         return year
+
     else:
         return "2000-2022"     
 
