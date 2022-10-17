@@ -38,8 +38,8 @@ d3.json("/readmongodb").then(function(data) {
     
     
     let traceB1 = {
-      x: death,
-      y: veis,
+      x: veis,
+      y: death,
       type: 'bar'
     };
     
@@ -59,7 +59,7 @@ d3.json("/readmongodb").then(function(data) {
     // Scatter Plot Code
 
 
-
+    // let vei_deaths = 
 
      let morph = {
       x: years,
