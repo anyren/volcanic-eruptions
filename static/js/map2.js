@@ -7,16 +7,17 @@ let cities = {
 };
 
 d3.json(url).then(function (data) {
-  console.log(data.items)
+  console.log(data.items);
   data.items.forEach((element) =>
     cities.features.push({
       type: "Feature",
       properties: {
         name: element.name,
-        country:element.country,
+        country: element.country,
         t: element.year - 1999,
         r: element.vei,
         year: element.year,
+        time: `${element.year}`,
         vtype: element.morphology,
       },
       geometry: {
@@ -26,6 +27,7 @@ d3.json(url).then(function (data) {
     })
   );
   createLayer();
+  sliderLayer();
 });
 
 let darkMode = L.tileLayer(
@@ -174,35 +176,6 @@ legend.onAdd = function () {
 };
 legend.addTo(map);
 
-// time variable for animation
-var time_lkup = [
-  { t: 1, date: "2000" },
-  { t: 2, date: "2001" },
-  { t: 3, date: "2002" },
-  { t: 4, date: "2003" },
-  { t: 5, date: "2004" },
-  { t: 6, date: "2005" },
-  { t: 7, date: "2006" },
-  { t: 8, date: "2007" },
-  { t: 9, date: "2008" },
-  { t: 10, date: "2009" },
-  { t: 11, date: "2010" },
-  { t: 12, date: "2011" },
-  { t: 13, date: "2012" },
-  { t: 14, date: "2013" },
-  { t: 15, date: "2014" },
-  { t: 16, date: "2015" },
-  { t: 17, date: "2016" },
-  { t: 18, date: "2017" },
-  { t: 19, date: "2018" },
-  { t: 20, date: "2019" },
-  { t: 21, date: "2020" },
-  { t: 22, date: "2021" },
-  { t: 23, date: "2022" },
-];
-
-var speed = 800;
-
 function projectPoint(x, y) {
   var point = map.latLngToLayerPoint(new L.LatLng(y, x));
   this.stream.point(point.x, point.y);
@@ -235,82 +208,181 @@ var time = svg2
   .attr("x", 10)
   .attr("y", 20)
   .attr("class", "time")
+  .attr("id", "year")
   .style("font-size", "20px")
   .text("Year:");
 
+// function addlocations() {
+//   g.selectAll("circle.points").remove();
+
+//   map.removeLayer(allMarker);
+
+//   var locations = g
+//     .selectAll("circle")
+//     .data(cities.features)
+//     .enter()
+//     .append("circle")
+//     .style("fill", function (d) {
+//       return getColor(d.properties.r);
+//     })
+//     .style("opacity", 0.6);
+
+//   locations
+//     .transition()
+//     .delay(function (d) {
+//       return speed * d.properties.t;
+//     })
+//     .attr("r", function (d) {
+//       return d.properties.r === "Unknown" ? 4 : d.properties.r * 4;
+//     })
+//     .attr("class", "points");
+
+//   var timer = svg2
+//     .selectAll(".text")
+//     .data(time_lkup)
+//     .enter()
+//     .append("text")
+//     .transition()
+//     .delay(function (d) {
+//       return speed * d.t;
+//     })
+//     .attr("x", 80)
+//     .attr("y", 20)
+//     .attr("class", "timer")
+//     .style("font-size", "20px")
+//     .style("opacity", 1)
+//     .text(function (d) {
+//       return d.date;
+//     })
+//     .transition()
+//     .duration(speed * 0.5)
+//     .style("opacity", 0);
+//   reset();
+//   map.on("viewreset", reset);
+
+//   function reset() {
+//     var bounds = d3path.bounds(cities),
+//       topLeft = bounds[0],
+//       bottomRight = bounds[1];
+
+//     // Setting the size and location of the overall SVG container
+//     svg
+//       .attr("width", bottomRight[0] - topLeft[0] + 120)
+//       .attr("height", bottomRight[1] - topLeft[1] + 120)
+//       .style("left", topLeft[0] - 50 + "px")
+//       .style("top", topLeft[1] - 50 + "px");
+
+//     g.attr(
+//       "transform",
+//       "translate(" + (-topLeft[0] + 50) + "," + (-topLeft[1] + 50) + ")"
+//     );
+
+//     locations.attr("transform", function (d) {
+//       return (
+//         "translate(" +
+//         applyLatLngToLayer(d).x +
+//         "," +
+//         applyLatLngToLayer(d).y +
+//         ")"
+//       );
+//     });
+//   }
+// }
+
+function dosomething() {
+  var elem = document.getElementById("clickMe");
+
+  if (elem.value == "PLAY") {
+    elem.value = "RESET";
+
+    addlocations();
+  } else {
+    elem.value = "PLAY";
+
+    removelocations();
+    return;
+  }
+}
+
+var timeValue = null;
 function addlocations() {
-  g.selectAll("circle.points").remove();
+  // setTimeout(function timer() {
+  // g.selectAll("circle.points").remove();
 
-  map.removeLayer(allMarker);
+  for (let i = 0; i < arr.length; i++) {
+    map.removeLayer(arr[i].layer);
+  }
 
-  var locations = g
-    .selectAll("circle")
-    .data(cities.features)
-    .enter()
-    .append("circle")
-    .style("fill", function (d) {
-      return getColor(d.properties.r);
-    })
-    .style("opacity", 0.6);
+  for (let i = 0; i < layers.length; i++) {
+    map.removeLayer(layers[i]);
+  }
 
-  locations
-    .transition()
-    .delay(function (d) {
-      return speed * d.properties.t;
-    })
-    .attr("r", function (d) {
-      return d.properties.r === "Unknown" ? 4 : d.properties.r * 4;
-    })
-    .attr("class", "points");
+  var elem = document.getElementById("year");
+  count = 2000;
+  console.log(document.getElementsByClassName("leaflet-clickable").length);
 
-  var timer = svg2
-    .selectAll(".text")
-    .data(time_lkup)
-    .enter()
-    .append("text")
-    .transition()
-    .delay(function (d) {
-      return speed * d.t;
-    })
-    .attr("x", 80)
-    .attr("y", 20)
-    .attr("class", "timer")
-    .style("font-size", "20px")
-    .style("opacity", 1)
-    .text(function (d) {
-      return d.date;
-    })
-    .transition()
-    .duration(speed * 0.5)
-    .style("opacity", 0);
-  reset();
-  map.on("viewreset", reset);
+  if (document.getElementsByClassName("leaflet-clickable").length === 0) {
+    for (let i = 0; i < layers.length; i++) {
+      setTimeout(() => {
+        map.addLayer(layers[i]);
+        elem.innerHTML = `Year: ${count + i}`;
+      }, 1000 * i);
+    }
+  }
+}
 
-  function reset() {
-    var bounds = d3path.bounds(cities),
-      topLeft = bounds[0],
-      bottomRight = bounds[1];
+function removelocations() {
+  var elem = document.getElementById("year");
+  elem.innerHTML = `Year: `;
 
-    // Setting the size and location of the overall SVG container
-    svg
-      .attr("width", bottomRight[0] - topLeft[0] + 120)
-      .attr("height", bottomRight[1] - topLeft[1] + 120)
-      .style("left", topLeft[0] - 50 + "px")
-      .style("top", topLeft[1] - 50 + "px");
+  for (let i = 0; i < arr.length; i++) {
+    map.removeLayer(arr[i].layer);
+  }
 
-    g.attr(
-      "transform",
-      "translate(" + (-topLeft[0] + 50) + "," + (-topLeft[1] + 50) + ")"
-    );
+  for (let i = 0; i < layers.length; i++) {
+    map.removeLayer(layers[i]);
+  }
+}
 
-    locations.attr("transform", function (d) {
-      return (
-        "translate(" +
-        applyLatLngToLayer(d).x +
-        "," +
-        applyLatLngToLayer(d).y +
-        ")"
-      );
+// Slider Control
+let layers = [];
+function sliderLayer() {
+  for (let i = 2000; i < 2023; i++) {
+    var sliderMarkerLayer = L.geoJson(cities, {
+      style: function (feature) {
+        return {
+          color: getColor(feature.properties.r),
+        };
+      },
+      pointToLayer: function (feature, latlng) {
+        return new L.CircleMarker(latlng, {
+          radius:
+            feature.properties.r === "Unknown" ? 4 : feature.properties.r * 4,
+          fillOpacity: 0.5,
+        });
+      },
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(
+          `<h5>${feature.properties.name} (${feature.properties.year})</h5> <b>Country:</b> ${feature.properties.country} <br> <b>Volcano Type:</b> ${feature.properties.vtype}<br><b>VEI: </b>${feature.properties.r}`
+        );
+      },
+      filter: function (feature, layer) {
+        // console.log(feature.properties.time, i);
+        return feature.properties.time === `${i}`;
+      },
     });
+    layers.push(sliderMarkerLayer);
+  }
+  layerGroup = L.layerGroup(layers);
+  sliderControl = L.control.sliderControl({
+    layer: layerGroup,
+    follow: true,
+    // alwaysShowDate: true,
+  });
+  map.addControl(sliderControl);
+  sliderControl.startSlider();
+
+  for (let i = 0; i < layers.length; i++) {
+    map.removeLayer(layers[i]);
   }
 }
