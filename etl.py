@@ -1,5 +1,6 @@
 import requests 
 from pprint import pprint
+import datetime
 
 import pymongo
 
@@ -16,7 +17,7 @@ class Connect:
 # Extracting the data from the API
 def extract():
     
-    maxYear=2022
+    maxYear=datetime.datetime.today().year
     minYear=2000
     url = f"https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/volcanoes?maxYear=2022&minYear=2000"
 
