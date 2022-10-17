@@ -173,7 +173,7 @@ def summary_data(year):
 
 @app.route("/graphs")
 def makeGraph():
-    return render_template("moe.html")
+    return render_template("graphs.html")
 
 
 #############################################################
