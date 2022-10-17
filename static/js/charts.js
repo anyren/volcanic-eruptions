@@ -88,6 +88,7 @@ d3.json("/readmongodb").then(function(data) {
       name: 'VEI by Country',
       text: ['B-a', 'B-b', 'B-c', 'B-d', 'B-e'],
       marker: { size: 12 }
+
     };
 
     let ScatData = [Countries];
@@ -96,10 +97,13 @@ d3.json("/readmongodb").then(function(data) {
 
     let Scatlayout = {
       xaxis: {
-        range: []
+        range: [],
+        automargin: true,
+        tickangle: 90
       },
       yaxis: {
-        range: []
+        range: [],
+        automargin: true,
       },
       title:'Morphology Per Country'
     };
