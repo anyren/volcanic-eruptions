@@ -2,7 +2,7 @@
 <img src="static/images/volcano.png" height="90" alt="volcano logo" style="float: left;"> 
 
 ## Overview 
-For Project 3 of the UMN Data Analysis Boot Camp, we constructed a full-stack website to visualize data on significan volcanic eruptions in the 21st century. The data was aquired from the [National Oceanographic and Atmospheric Administration](https://www.ngdc.noaa.gov/hazard/volcano.shtml).  
+For Project 3 of the UMN Data Analysis Boot Camp, we constructed a full-stack website to visualize data on significant volcanic eruptions in the 21st century. The data was aquired from the [National Oceanographic and Atmospheric Administration](https://www.ngdc.noaa.gov/hazard/volcano.shtml).  
 ### Team
 * Amanda Nyren
 * William Vann
