@@ -29,6 +29,8 @@ d3.json("/readmongodb").then(function(data) {
     console.log('looking at morphology');
     console.log(Morph)
 
+    let date = items.map(dt => dt.date);
+
     
 
     
@@ -38,19 +40,28 @@ d3.json("/readmongodb").then(function(data) {
     
     
     let traceB1 = {
-      x: death,
-      y: veis,
+      x: country,
+      y: death,
+      name: 'Death',
       type: 'bar'
     };
     
-    let Bardata = [traceB1];
     
-    let Barlayout = {
-      title: title
-    };
-    
-    
-    Plotly.newPlot("bar", Bardata, Barlayout);
+    // let Barlayout = {
+      //   title: title
+      
+      // };
+      
+      let traceB2 = {
+        x: country,
+        y: veis ,
+        name: 'Veis',
+        type: 'bar'
+      };
+      
+    let Bardata = [traceB1, traceB2];
+    let s_layout = {barmode: 'stacked'};
+    Plotly.newPlot("bar", Bardata, s_layout);
     
     console.log('This is data')
     console.log(data);
@@ -58,31 +69,43 @@ d3.json("/readmongodb").then(function(data) {
     
     // Scatter Plot Code
 
-
-
-
      let morph = {
-      x: years,
-      y: Morph,
+      x: Morph,
+      y: date,
       mode: 'markers',
       type: 'scatter',
       name: 'deaths',
       text: ['A-1', 'A-2', 'A-3', 'A-4', 'A-5'],
       marker: { size: 10 }
+
     };
 
     let Countries = {
-      x: Morph,
+      x: veis,
       y: country,
       mode: 'markers',
       type: 'scatter',
       name: 'Country',
       text: ['B-a', 'B-b', 'B-c', 'B-d', 'B-e'],
-      marker: { size: 12 }
+      marker: { size: 5 }
     };
+    
+    // let vd = {
+    //   x: years,
+    //   y: veis,
+    //   mode: 'markers',
+    //   type: 'scatter',
+    //   name: 'vei',
+    //   text: ['B-a', 'B-b', 'B-c', 'B-d', 'B-e'],
+    //   marker: { size: 12 }
+    // };
+
+    
+
 
     let ScatData = [Countries];
     let ScatData2 = [morph];
+    // let ScatData3 = {vd}
 
     let Scatlayout = {
       xaxis: {
@@ -102,9 +125,24 @@ d3.json("/readmongodb").then(function(data) {
       },
       title:'Morphology Per Year'
     };
+    // let Scatlayout3 = {
+    //   xaxis: {
+    //     range: []
+    //   },
+    //   yaxis: {
+    //     range: []
+    //   },
+    //   title:'VEI per Year'
+    // };
+
+    
+
+
+
 
     Plotly.newPlot('scat-by-country', ScatData, Scatlayout);
     Plotly.newPlot('scat-by-morph', ScatData2, Scatlayout2);
+    // Plotly.newPlot('scat-by-vei', ScatData3, Scatlayout3);
 
 
 
