@@ -1,40 +1,40 @@
 .navbar-brand {
-    color: #a60b0a; 
-    font-size:x-large;
-    padding:10px;
+  color: #a60b0a;
+  font-size: x-large;
+  padding: 10px;
 }
 
 .navbar {
-    background-color: #b0d4dc;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #b0d4dc;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 .nav-link {
-    color:#a60b0a;
-    font-size: large;
+  color: #a60b0a;
+  font-size: large;
 }
 
 #time {
-    margin: 10px 10%;
-    border: 2px solid #000;
-    border-radius: 5px;
-    height: 40px;
-    width:150px;
-    background: #f0f8ff;
-}
-  
-#clickMe {
-    margin: 10px 10%;
-}
-  
-#map {
-    height: 700px;
-    width: 1300px;
-    
+  margin: 10px 10%;
+  border: 2px solid #000;
+  border-radius: 5px;
+  height: 40px;
+  width: 150px;
+  background: #f0f8ff;
 }
 
-body,html {
-    height: 100%;
+#clickMe {
+  margin: 10px 10%;
+}
+
+#map {
+  height: 700px;
+  width: 1300px;
+}
+
+body,
+html {
+  height: 100%;
 }
 
 .carousel-item img {
@@ -51,106 +51,110 @@ body,html {
 }
 
 .legend {
-    padding: 6px 8px;
-    font: 12px Arial, Helvetica, sans-serif;
-    background: white;
-    background: rgba(255, 255, 255, 0.8);
-    line-height: 24px;
-    color: #555;
-    border-radius: 8px;
+  padding: 6px 8px;
+  font: 12px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  line-height: 24px;
+  color: #555;
+  border-radius: 8px;
 }
 
 .legend {
-    line-height: 25px;
-    text-align: left;
-    color: #555;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 15px;
-    font-size: 22px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    margin-right: 25px;
-    opacity: 0.6;
+  line-height: 25px;
+  text-align: left;
+  color: #555;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 15px;
+  font-size: 22px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  margin-right: 25px;
+  opacity: 0.6;
 }
 
 .legend h4 {
-    text-align: center;
-    font-size: 22px;
-    margin: 2px 12px 8px;
-    color: #555;
+  text-align: center;
+  font-size: 22px;
+  margin: 2px 12px 8px;
+  color: #555;
 }
-  
+
 .legend span {
-    position: relative;
-    bottom: 3px;
+  position: relative;
+  bottom: 3px;
 }
-  
+
 .legend i {
-    width: 25px;
-    height: 25px;
-    float: left;
-    margin-right: 8px;
-    opacity: 0.7;
-    opacity: 0.6;
+  width: 25px;
+  height: 25px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .gallery {
-    background-color: #FFF8E2;
+  background-color: #fff8e2;
 }
 
 .card-header {
-    background-color: grey;
+  background-color: grey;
 }
 
 #data-table {
-    text-align: left;
+  text-align: left;
 }
 
 #drop-down-card {
-    text-align: center;
-    background-color: white;    
+  text-align: center;
+  background-color: white;
 }
 
 #data-card {
-    margin-top: 40px;    
+  margin-top: 40px;
 }
 
 #volcanoes-by-country-card {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 #morph-card {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 #vei-card {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 #eruptions-card {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 #white-header {
-    background-color: white;
+  background-color: white;
 }
- 
+
 .timelapse {
-    background-color: #FFF8E2;
+  background-color: #fff8e2;
 }
 
 th {
-    text-align: center;       
+  text-align: center;
 }
 
 #selectYear {
-    background-color: orange;
+  background-color: orange;
 }
 
 #image-rotator {
-    background-color: orange;
-    padding: 10px;
-    margin: 10px;
-    border: 10px;
-    border-radius: 5%;    
+  background-color: orange;
+  padding: 10px;
+  margin: 10px;
+  border: 10px;
+  border-radius: 5%;
+}
+
+.slider.leaflet-control {
+  position: relative;
 }
