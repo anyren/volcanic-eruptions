@@ -212,92 +212,18 @@ var time = svg2
   .style("font-size", "20px")
   .text("Year:");
 
-// function addlocations() {
-//   g.selectAll("circle.points").remove();
-
-//   map.removeLayer(allMarker);
-
-//   var locations = g
-//     .selectAll("circle")
-//     .data(cities.features)
-//     .enter()
-//     .append("circle")
-//     .style("fill", function (d) {
-//       return getColor(d.properties.r);
-//     })
-//     .style("opacity", 0.6);
-
-//   locations
-//     .transition()
-//     .delay(function (d) {
-//       return speed * d.properties.t;
-//     })
-//     .attr("r", function (d) {
-//       return d.properties.r === "Unknown" ? 4 : d.properties.r * 4;
-//     })
-//     .attr("class", "points");
-
-//   var timer = svg2
-//     .selectAll(".text")
-//     .data(time_lkup)
-//     .enter()
-//     .append("text")
-//     .transition()
-//     .delay(function (d) {
-//       return speed * d.t;
-//     })
-//     .attr("x", 80)
-//     .attr("y", 20)
-//     .attr("class", "timer")
-//     .style("font-size", "20px")
-//     .style("opacity", 1)
-//     .text(function (d) {
-//       return d.date;
-//     })
-//     .transition()
-//     .duration(speed * 0.5)
-//     .style("opacity", 0);
-//   reset();
-//   map.on("viewreset", reset);
-
-//   function reset() {
-//     var bounds = d3path.bounds(cities),
-//       topLeft = bounds[0],
-//       bottomRight = bounds[1];
-
-//     // Setting the size and location of the overall SVG container
-//     svg
-//       .attr("width", bottomRight[0] - topLeft[0] + 120)
-//       .attr("height", bottomRight[1] - topLeft[1] + 120)
-//       .style("left", topLeft[0] - 50 + "px")
-//       .style("top", topLeft[1] - 50 + "px");
-
-//     g.attr(
-//       "transform",
-//       "translate(" + (-topLeft[0] + 50) + "," + (-topLeft[1] + 50) + ")"
-//     );
-
-//     locations.attr("transform", function (d) {
-//       return (
-//         "translate(" +
-//         applyLatLngToLayer(d).x +
-//         "," +
-//         applyLatLngToLayer(d).y +
-//         ")"
-//       );
-//     });
-//   }
-// }
-
+let abort = false;
 function dosomething() {
   var elem = document.getElementById("clickMe");
 
   if (elem.value == "PLAY") {
     elem.value = "RESET";
+    abort = false;
 
     addlocations();
   } else {
     elem.value = "PLAY";
+    abort = true;
 
     removelocations();
     return;
@@ -324,8 +250,10 @@ function addlocations() {
   if (document.getElementsByClassName("leaflet-clickable").length === 0) {
     for (let i = 0; i < layers.length; i++) {
       setTimeout(() => {
-        map.addLayer(layers[i]);
-        elem.innerHTML = `Year: ${count + i}`;
+        if (abort == false) {
+          map.addLayer(layers[i]);
+          elem.innerHTML = `Year: ${count + i}`;
+        }
       }, 1000 * i);
     }
   }
