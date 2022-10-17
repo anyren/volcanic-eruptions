@@ -1,75 +1,59 @@
-// most of this code was written by Bill Vann and Amanda Nyren added logic to break out the volcano types into layers
+const url = "/readmongodb";
 
-// Create map object
-
-function createMap(markers, stratovolcano,shieldVolcano, submarineVolcano,caldera,lavaDome, pyroclasticShield,subGlacial, complexVolcano){
-    // tile layers
-    let streetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-    let darkmap = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-      })
-
-    // Create a baseMaps object to hold the tile layers.
-    let baseMaps = {
-        "Dark Map" : darkmap,
-        "Street Map": streetmap,
-        
-      };
-    
-    // Create an overlayMaps object 
-    let overlayMaps = {
-        "All Volcanoes":markers,
-        "Caldera": caldera,
-        "Complex": complexVolcano,
-        "Lava dome":lavaDome,
-        "Pyroclastic shield": pyroclasticShield,
-        "Shield":shieldVolcano,
-        "Stratovolcano":stratovolcano,
-        "Subglacial": subGlacial,
-        "Submarine":submarineVolcano,
-      }
-
-    //create map object
-    let map = L.map("map", {
-        center: [40.866667, 34.566667], //geographical center of earth from https://en.wikipedia.org/wiki/Geographical_centre_of_Earth
-        zoom: 2,
-        layers: [darkmap, markers]
-      });
-
-    //control layer
-    L.control.layers(baseMaps, overlayMaps, {
-        collapsed: false
-      }).addTo(map);
-    
-    //legend
-    let legend = L.control({ position: "bottomright" });
-    
-    legend.onAdd = function (map) {
-        let div = L.DomUtil.create("div", "legend");
-        div.innerHTML += "<h4>VEI</h4>";
-        div.innerHTML += '<i style="background: #fff5eb"></i><span>0</span><br>';
-        div.innerHTML += '<i style="background: #fee6ce"></i><span>1</span><br>';
-        div.innerHTML += '<i style="background: #fdd0a2"></i><span>2</span><br>';
-        div.innerHTML += '<i style="background: #fdae6b"></i><span>3</span><br>';
-        div.innerHTML += '<i style="background: #fd8d3c"></i><span>4</span><br>';
-        div.innerHTML += '<i style="background: #f16913"></i><span>5</span><br>';
-        div.innerHTML += '<i style="background: #d94801"></i><span>6</span><br>';
-        div.innerHTML += '<i style="background: #a63603"></i><span>7</span><br>';
-        div.innerHTML += '<i style="background: #7f2704"></i><span>8</span><br>';
-        div.innerHTML +=
-        '<i style="background: #737373"></i><span>Unknown</span><br>';
-
-        return div;
-    };
-
-    legend.addTo(map);
+// Converting data into GeoJson format
+let cities = {
+  type: "FeatureCollection",
+  features: [],
 };
 
-// instatiate layer groups
-let markerGroup = L.layerGroup(null);
+d3.json(url).then(function (data) {
+  console.log(data.items);
+  data.items.forEach((element) =>
+    cities.features.push({
+      type: "Feature",
+      properties: {
+        name: element.name,
+        country: element.country,
+        t: element.year - 1999,
+        r: element.vei,
+        year: element.year,
+        time: `${element.year}`,
+        vtype: element.morphology,
+      },
+      geometry: {
+        type: "Point",
+        coordinates: [element.longitude, element.latitude],
+      },
+    })
+  );
+  createLayer();
+  sliderLayer();
+});
+
+let darkMode = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+  {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    // subdomains: "abcd",
+    maxZoom: 20,
+  }
+);
+
+let streetmap = L.tileLayer(
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }
+);
+
+let baseMaps = {
+  "Dark Mode": darkMode,
+  "Light Mode": streetmap,
+};
+
+let allMarker = L.layerGroup(null);
 let stratovolcano = L.layerGroup(null);
 let shieldVolcano = L.layerGroup(null);
 let submarineVolcano = L.layerGroup(null);
@@ -79,110 +63,326 @@ let pyroclasticShield = L.layerGroup(null);
 let subGlacial = L.layerGroup(null);
 let complexVolcano = L.layerGroup(null);
 
-function createMarkers(){
-    // API
-    const url = "/readmongodb";
+const arr = [
+  { layer: allMarker, morphology: "" },
+  { layer: stratovolcano, morphology: "Stratovolcano" },
+  { layer: shieldVolcano, morphology: "Shield volcano" },
+  { layer: submarineVolcano, morphology: "Submarine volcano" },
+  { layer: caldera, morphology: "Caldera" },
+  { layer: lavaDome, morphology: "Lava dome" },
+  { layer: pyroclasticShield, morphology: "Pyroclastic shield" },
+  { layer: subGlacial, morphology: "Subglacial volcano" },
+  { layer: complexVolcano, morphology: "Complex volcano" },
+];
 
-    d3.json(url).then(function (data) {
-    let the_dicts = data.items;
-
-    // Iterate over items
-
-    for (let i = 0; i < the_dicts.length; i++) {
-        // Use for placing circles on map
-
-        let lat = the_dicts[i].latitude;
-        let lon = the_dicts[i].longitude;
-        let loc = the_dicts[i].location;
-        let name = the_dicts[i].name;
-        let country = the_dicts[i].country;
-        // let id = the_dicts[i].id;
-        let type = the_dicts[i].morphology;
-        let year = the_dicts[i].year;
-        let vei = the_dicts[i].vei;
-
-        // Size circles
-
-        if (vei > 0) {
-        radius = 100000 * vei;
-        } else {
-        radius = 100000 / Math.PI;
-        }
-
-        // Light to dark, less opaque to more opaque, for circles based on depth
-
-        if (vei == 0) {
-        color = "#fff5eb";
-        fillOpacity = 0.2;
-        } else if (vei == 1) {
-        color = "#fee6ce";
-        fillOpacity = 0.4;
-        } else if (vei == 2) {
-        color = "#fdae6b";
-        fillOpacity = 0.6;
-        } else if (vei == 3) {
-        color = "#fd8d3c";
-        fillOpacity = 0.8;
-        } else if (vei == 4) {
-        color = "#f16913";
-        fillOpacity = 0.9;
-        } else if (vei == 5) {
-        color = "#d94801";
-        fillOpacity = 0.9;
-        } else if (vei == 6) {
-        color = "#a63603";
-        fillOpacity = 0.9;
-        } else if (vei == 7) {
-        color = "#7f2704";
-        fillOpacity = 1.0;
-        } else if (vei == 8) {
-        color = "#7f2704";
-        fillOpacity = 1.0;
-        } else {
-        color = "#737373";
-        fillOpacity = 1.0;
-        radius = 50000;
-        }
-        let circle = L.circle([lat, lon], {
-            color: color,
-            fillColor: color,
-            fillOpacity: fillOpacity,
-            radius: radius,
-            });
-
-        let popupText = "<h5>" + name + " (" + year + ")" + "</h5><b>" + "Volcano Type: " + "</b>" + type + "<br><b>VEI: </b>" + vei ;
-        circle.bindPopup(popupText);
-        
-        if(type=="Stratovolcano"){
-            stratovolcano.addLayer(circle);
-        }
-        else if (type=="Shield volcano"){
-            shieldVolcano.addLayer(circle);
-        }
-        else if (type =="Submarine volcano"){
-            submarineVolcano.addLayer(circle);
-        }
-        else if (type == "Caldera"){
-            caldera.addLayer(circle);
-        }
-        else if (type == "Lava dome"){
-            lavaDome.addLayer(circle);
-        }
-        else if (type == "Pyroclastic shield"){
-            pyroclasticShield.addLayer(circle);
-        }
-        else if (type == "Subglacial volcano"){
-            subGlacial.addLayer(circle);
-        }
-        else if (type == "Complex volcano"){
-            complexVolcano.addLayer(circle);
-        }
-       
-        markerGroup.addLayer(circle);
-        
-        
-    }
+function createLayer() {
+  for (let i = 0; i < arr.length; i++) {
+    const markerLayer = L.geoJson(cities, {
+      style: function (feature) {
+        return {
+          color: getColor(feature.properties.r),
+        };
+      },
+      pointToLayer: function (feature, latlng) {
+        return new L.CircleMarker(latlng, {
+          radius:
+            feature.properties.r === "Unknown" ? 4 : feature.properties.r * 4,
+          fillOpacity: 0.5,
+        });
+      },
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(
+          `<h5>${feature.properties.name} (${feature.properties.year})</h5> <b>Country:</b> ${feature.properties.country} <br> <b>Volcano Type:</b> ${feature.properties.vtype}<br><b>VEI: </b>${feature.properties.r}`
+        );
+      },
+      filter: function (feature, layer) {
+        return arr[i].morphology
+          ? feature.properties.vtype === arr[i].morphology
+          : feature.properties.vtype;
+      },
     });
+
+    arr[i].layer.addLayer(markerLayer);
+  }
+}
+
+let map = L.map("map", {
+  center: [0, 0],
+  zoom: 2,
+  layers: [darkMode, allMarker],
+});
+
+let overlayMaps = {
+  "All Volcanoes": allMarker,
+  Caldera: caldera,
+  Complex: complexVolcano,
+  "Lava dome": lavaDome,
+  "Pyroclastic shield": pyroclasticShield,
+  Shield: shieldVolcano,
+  Stratovolcano: stratovolcano,
+  Subglacial: subGlacial,
+  Submarine: submarineVolcano,
 };
-createMarkers();
-createMap(markerGroup, stratovolcano, shieldVolcano, submarineVolcano, caldera,lavaDome, pyroclasticShield,subGlacial, complexVolcano);
+
+// Creating control layer
+L.control
+  .layers(baseMaps, overlayMaps, {
+    collapsed: false,
+  })
+  .addTo(map);
+
+// function to color the markers
+function getColor(d) {
+  return d === 0
+    ? "#ffecb3"
+    : d === 1
+    ? "#ffd966"
+    : d === 2
+    ? "#ffc61a"
+    : d === 3
+    ? "#e88504"
+    : d === 4
+    ? "#FF7700"
+    : d === 5
+    ? "#FF5349"
+    : d === 6
+    ? "#E73927"
+    : d === 7
+    ? "#DD1F13"
+    : d === 8
+    ? "#CF0107"
+    : "green";
+}
+
+// creating the legend
+let legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function () {
+  let div = L.DomUtil.create("div", "info legend");
+  let depth = [0, 1, 2, 3, 4, 5, 6, 7, 8, "UKN"];
+
+  // loop through our density intervals and generate a label with a colored square for each interval
+  div.innerHTML += "<h4>VEI</h4>";
+  for (let i = 0; i < depth.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' +
+      getColor(depth[i]) +
+      '"></i> ' +
+      depth[i] +
+      "<br>";
+  }
+
+  return div;
+};
+legend.addTo(map);
+
+function projectPoint(x, y) {
+  var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+  this.stream.point(point.x, point.y);
+}
+// similar to projectPoint this function converts lat/long to
+// svg coordinates except that it accepts a point from our
+// GeoJSON
+function applyLatLngToLayer(d) {
+  var y = d.geometry.coordinates[1];
+  var x = d.geometry.coordinates[0];
+  return map.latLngToLayerPoint(new L.LatLng(y, x));
+}
+
+// appending the SVG to the Leaflet map pane
+// g (group) element will be inside the svg
+var svg = d3.select(map.getPanes().overlayPane).append("svg");
+var g = svg.append("g").attr("class", "leaflet-zoom-hide");
+
+var transform = d3.geo.transform({ point: projectPoint });
+var d3path = d3.geo.path().projection(transform);
+
+var svg2 = d3
+  .select("#time")
+  .append("svg")
+  .attr("height", 20)
+  .attr("class", "time");
+
+var time = svg2
+  .append("text")
+  .attr("x", 10)
+  .attr("y", 20)
+  .attr("class", "time")
+  .attr("id", "year")
+  .style("font-size", "20px")
+  .text("Year:");
+
+// function addlocations() {
+//   g.selectAll("circle.points").remove();
+
+//   map.removeLayer(allMarker);
+
+//   var locations = g
+//     .selectAll("circle")
+//     .data(cities.features)
+//     .enter()
+//     .append("circle")
+//     .style("fill", function (d) {
+//       return getColor(d.properties.r);
+//     })
+//     .style("opacity", 0.6);
+
+//   locations
+//     .transition()
+//     .delay(function (d) {
+//       return speed * d.properties.t;
+//     })
+//     .attr("r", function (d) {
+//       return d.properties.r === "Unknown" ? 4 : d.properties.r * 4;
+//     })
+//     .attr("class", "points");
+
+//   var timer = svg2
+//     .selectAll(".text")
+//     .data(time_lkup)
+//     .enter()
+//     .append("text")
+//     .transition()
+//     .delay(function (d) {
+//       return speed * d.t;
+//     })
+//     .attr("x", 80)
+//     .attr("y", 20)
+//     .attr("class", "timer")
+//     .style("font-size", "20px")
+//     .style("opacity", 1)
+//     .text(function (d) {
+//       return d.date;
+//     })
+//     .transition()
+//     .duration(speed * 0.5)
+//     .style("opacity", 0);
+//   reset();
+//   map.on("viewreset", reset);
+
+//   function reset() {
+//     var bounds = d3path.bounds(cities),
+//       topLeft = bounds[0],
+//       bottomRight = bounds[1];
+
+//     // Setting the size and location of the overall SVG container
+//     svg
+//       .attr("width", bottomRight[0] - topLeft[0] + 120)
+//       .attr("height", bottomRight[1] - topLeft[1] + 120)
+//       .style("left", topLeft[0] - 50 + "px")
+//       .style("top", topLeft[1] - 50 + "px");
+
+//     g.attr(
+//       "transform",
+//       "translate(" + (-topLeft[0] + 50) + "," + (-topLeft[1] + 50) + ")"
+//     );
+
+//     locations.attr("transform", function (d) {
+//       return (
+//         "translate(" +
+//         applyLatLngToLayer(d).x +
+//         "," +
+//         applyLatLngToLayer(d).y +
+//         ")"
+//       );
+//     });
+//   }
+// }
+
+function dosomething() {
+  var elem = document.getElementById("clickMe");
+
+  if (elem.value == "PLAY") {
+    elem.value = "RESET";
+
+    addlocations();
+  } else {
+    elem.value = "PLAY";
+
+    removelocations();
+    return;
+  }
+}
+
+var timeValue = null;
+function addlocations() {
+  // setTimeout(function timer() {
+  // g.selectAll("circle.points").remove();
+
+  for (let i = 0; i < arr.length; i++) {
+    map.removeLayer(arr[i].layer);
+  }
+
+  for (let i = 0; i < layers.length; i++) {
+    map.removeLayer(layers[i]);
+  }
+
+  var elem = document.getElementById("year");
+  count = 2000;
+  console.log(document.getElementsByClassName("leaflet-clickable").length);
+
+  if (document.getElementsByClassName("leaflet-clickable").length === 0) {
+    for (let i = 0; i < layers.length; i++) {
+      setTimeout(() => {
+        map.addLayer(layers[i]);
+        elem.innerHTML = `Year: ${count + i}`;
+      }, 1000 * i);
+    }
+  }
+}
+
+function removelocations() {
+  var elem = document.getElementById("year");
+  elem.innerHTML = `Year: `;
+
+  for (let i = 0; i < arr.length; i++) {
+    map.removeLayer(arr[i].layer);
+  }
+
+  for (let i = 0; i < layers.length; i++) {
+    map.removeLayer(layers[i]);
+  }
+}
+
+// Slider Control
+let layers = [];
+function sliderLayer() {
+  for (let i = 2000; i < 2023; i++) {
+    var sliderMarkerLayer = L.geoJson(cities, {
+      style: function (feature) {
+        return {
+          color: getColor(feature.properties.r),
+        };
+      },
+      pointToLayer: function (feature, latlng) {
+        return new L.CircleMarker(latlng, {
+          radius:
+            feature.properties.r === "Unknown" ? 4 : feature.properties.r * 4,
+          fillOpacity: 0.5,
+        });
+      },
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(
+          `<h5>${feature.properties.name} (${feature.properties.year})</h5> <b>Country:</b> ${feature.properties.country} <br> <b>Volcano Type:</b> ${feature.properties.vtype}<br><b>VEI: </b>${feature.properties.r}`
+        );
+      },
+      filter: function (feature, layer) {
+        // console.log(feature.properties.time, i);
+        return feature.properties.time === `${i}`;
+      },
+    });
+    layers.push(sliderMarkerLayer);
+  }
+  layerGroup = L.layerGroup(layers);
+  sliderControl = L.control.sliderControl({
+    layer: layerGroup,
+    follow: true,
+    // alwaysShowDate: true,
+  });
+  map.addControl(sliderControl);
+  sliderControl.startSlider();
+
+  for (let i = 0; i < layers.length; i++) {
+    map.removeLayer(layers[i]);
+  }
+}
